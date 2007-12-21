@@ -13,6 +13,7 @@ Patch1: kicad-gcc41.patch.bz2
 License: GPL
 Group: Sciences/Computer science
 Url: http://www.lis.inpg.fr/realise_au_lis/kicad/
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: wxGTK-devel >= 2.6
 BuildRequires: mesa-common-devel
 BuildRequires: ImageMagick
