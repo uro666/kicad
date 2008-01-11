@@ -84,16 +84,6 @@ popd
 
 popd
 
-mkdir -p %{buildroot}{%{_menudir},%{_miconsdir},%{_iconsdir},%{_liconsdir}}
-cat << EOF > %{buildroot}%{_menudir}/%{name}
-?package(%name):command="%{_bindir}/%{name}" \
-icon="%name.png" needs="X11" \
-section="More Applications/Sciences/Electricity" startup_notify="false" \
-title="Kicad" longtitle="An open source software for the creation of electronic schematic diagrams" \
-mimetypes="" accept_url="false" \
-multiple_files="false" \
-xdg="true"
-EOF
 
 mkdir -p $RPM_BUILD_ROOT%{_datadir}/applications
 cat > $RPM_BUILD_ROOT%{_datadir}/applications/mandriva-%{name}.desktop << EOF
@@ -127,7 +117,6 @@ rm -rf %{buildroot}
 %defattr(-,root,root)
 %{_bindir}/*
 %{_datadir}/%{name}
-%{_menudir}/%{name}
 %{_miconsdir}/%{name}.png
 %{_iconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
