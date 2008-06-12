@@ -106,11 +106,15 @@ convert -resize 48x48 %{buildroot}%{_datadir}/%{name}/kicad_icon.png %{buildroot
 %clean
 rm -rf %{buildroot}
 
+%if %mdkversion < 200900
 %post
 %{update_menus}
+%endif
 
+%if %mdkversion < 200900
 %postun
 %{clean_menus}
+%endif
 
 
 %files
