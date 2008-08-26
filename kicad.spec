@@ -11,7 +11,7 @@ Version: %{version}
 Release: %{release}
 Source0: %{name}-%{version}.tar.bz2
 Patch0: disable_svn_header.patch
-Patch1: kicad-20080715-fix-desktop.patch
+Patch1: fix_desktop.patch
 License: GPLv2+
 Group: Sciences/Computer science
 Url: http://www.lis.inpg.fr/realise_au_lis/kicad/
@@ -39,7 +39,7 @@ Kicad is a set of four softwares and a project manager:
 %prep
 %setup -q -n %{name} 
 %patch0 -p1
-%patch1 -p0
+%patch1 -p1
 
 %build
 export LC_ALL=C
@@ -89,4 +89,3 @@ rm -rf %{buildroot}
 %{_datadir}/applications/*
 %{_datadir}/pixmaps/%{name}.png
 %doc %{_datadir}/doc/%{name}
-
