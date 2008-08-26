@@ -3,7 +3,7 @@
 %define name kicad
 %define version 20080715
 %define date 2008-07-15
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary:  An open source software for the creation of electronic schematic diagrams
 Name: %{name}
@@ -12,7 +12,7 @@ Release: %{release}
 Source0: %{name}-%{version}.tar.bz2
 Patch0: disable_svn_header.patch
 Patch1: kicad-20080715-fix-desktop.patch
-License: GPL
+License: GPLv2+
 Group: Sciences/Computer science
 Url: http://www.lis.inpg.fr/realise_au_lis/kicad/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
