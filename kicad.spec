@@ -51,7 +51,7 @@ rm -rf %{buildroot}
 make -C build DESTDIR=%buildroot install
 
 # create desktop file
-desktop-file-utils --vendor='' \
+desktop-file-install --vendor='' \
 	--remove-category='Scientific' \
 	--add-category='Science;Electronics' \
 	--dir=%buildroot%{_datadir}/applications \
