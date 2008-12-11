@@ -18,7 +18,7 @@ Url: http://www.lis.inpg.fr/realise_au_lis/kicad/
 BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-buildroot
 BuildRequires: wxGTK-devel >= 2.6
 BuildRequires: mesa-common-devel
-BuildRequires: ImageMagick
+BuildRequires: imagemagick
 BuildRequires: boost-devel
 BuildRequires: cmake
 BuildRequires: desktop-file-utils
