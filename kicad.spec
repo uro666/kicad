@@ -1,17 +1,29 @@
 %define _disable_ld_no_undefined 1
 
 %define name kicad
-%define version 20080715
-%define date 2008-07-15
-%define release %mkrel 4
+%define version 20090216
+%define date 2009-02-16
+%define release %mkrel 1
 
 Summary:  An open source software for the creation of electronic schematic diagrams
 Name: %{name}
 Version: %{version}
 Release: %{release}
-Source0: %{name}-%{version}.tar.bz2
+Source0: %{name}-sources-%{date}.tar.gz
 Patch0: disable_svn_header.patch
 Patch1: fix_desktop.patch
+Patch2: fix_printf_format.patch
+Patch3: fix_printf_format2.patch
+Patch4: fix_printf_format3.patch
+Patch5: fix_printf_format4.patch
+Patch6: fix_printf_format5.patch
+Patch7: fix_printf_format6.patch
+Patch8: fix_printf_format7.patch
+Patch9: fix_printf_format8.patch
+Patch10: fix_printf_format9.patch
+Patch11: fix_printf_format10.patch
+Patch12: fix_printf_format11.patch
+
 License: GPLv2+
 Group: Sciences/Computer science
 Url: http://www.lis.inpg.fr/realise_au_lis/kicad/
@@ -37,9 +49,20 @@ Kicad is a set of four softwares and a project manager:
 	Kicad:      project manager.
 
 %prep
-%setup -q -n %{name} 
-%patch0 -p1
+%setup -q -n %{name}-%{date}
+#patch0 -p1
 %patch1 -p1
+%patch2 -p1
+%patch3 -p1
+%patch4 -p1
+%patch5 -p1
+%patch6 -p1
+%patch7 -p1
+%patch8 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
 
 %build
 export LC_ALL=C
@@ -88,4 +111,8 @@ rm -rf %{buildroot}
 %{_liconsdir}/%{name}.png
 %{_datadir}/applications/*
 %{_datadir}/pixmaps/%{name}.png
+%{_datadir}/pixmaps/%{name}_cvpcb.png
+%{_datadir}/pixmaps/%{name}_eeschema.png
+%{_datadir}/pixmaps/%{name}_gerbview.png
+%{_datadir}/pixmaps/%{name}_pcbnew.png
 %doc %{_datadir}/doc/%{name}
