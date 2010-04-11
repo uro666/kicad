@@ -1,8 +1,10 @@
 %define _disable_ld_no_undefined 1
+%define _disable_ld_as_needed    1
+%define Werror_cflags            %nil
 
 %define name kicad
-%define version 20090216
-%define date 2009-02-16
+%define version 20100314
+%define date 2010-03-14-svn-R2456-final
 %define release %mkrel 1
 
 Summary:  An open source software for the creation of electronic schematic diagrams
@@ -10,20 +12,6 @@ Name: %{name}
 Version: %{version}
 Release: %{release}
 Source0: %{name}-sources-%{date}.tar.gz
-Patch0: disable_svn_header.patch
-Patch1: fix_desktop.patch
-Patch2: fix_printf_format.patch
-Patch3: fix_printf_format2.patch
-Patch4: fix_printf_format3.patch
-Patch5: fix_printf_format4.patch
-Patch6: fix_printf_format5.patch
-Patch7: fix_printf_format6.patch
-Patch8: fix_printf_format7.patch
-Patch9: fix_printf_format8.patch
-Patch10: fix_printf_format9.patch
-Patch11: fix_printf_format10.patch
-Patch12: fix_printf_format11.patch
-
 License: GPLv2+
 Group: Sciences/Computer science
 Url: http://www.lis.inpg.fr/realise_au_lis/kicad/
@@ -49,24 +37,12 @@ Kicad is a set of four softwares and a project manager:
 	Kicad:      project manager.
 
 %prep
-%setup -q -n %{name}-%{date}
-#patch0 -p1
-%patch1 -p1
-%patch2 -p1
-%patch3 -p1
-%patch4 -p1
-%patch5 -p1
-%patch6 -p1
-%patch7 -p1
-%patch8 -p1
-%patch9 -p1
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
+%setup -q -n %{name}
 
 %build
 export LC_ALL=C
 %cmake -DBUILD_SHARED_LIBS:BOOL=OFF
+#cmake
 %make
 
 %install
@@ -82,10 +58,9 @@ desktop-file-install --vendor='' \
 
 # create icons
 mkdir -p %{buildroot}%{_miconsdir} %{buildroot}%{_iconsdir} %{buildroot}%{_liconsdir}
-convert -resize 16x16 %{buildroot}%{_datadir}/pixmaps/%{name}.png %{buildroot}%{_miconsdir}/%{name}.png
-convert -resize 32x32 %{buildroot}%{_datadir}/pixmaps/%{name}.png %{buildroot}%{_iconsdir}/%{name}.png
-convert -resize 48x48 %{buildroot}%{_datadir}/pixmaps/%{name}.png %{buildroot}%{_liconsdir}/%{name}.png
-
+convert -resize 16x16 %{buildroot}%{_iconsscaldir}/%{name}.svg %{buildroot}%{_miconsdir}/%{name}.png
+convert -resize 32x32 %{buildroot}%{_iconsscaldir}/%{name}.svg %{buildroot}%{_iconsdir}/%{name}.png
+convert -resize 48x48 %{buildroot}%{_iconsscaldir}/%{name}.svg %{buildroot}%{_liconsdir}/%{name}.png
 
 %clean
 rm -rf %{buildroot}
@@ -106,13 +81,19 @@ rm -rf %{buildroot}
 %{_bindir}/*
 %{_prefix}/lib/%{name}/plugins/netlist_form_pads-pcb
 %{_datadir}/%{name}
+%{_iconsbasedir}/16x16/mimetypes/application-x-kicad-project.png
+%{_iconsbasedir}/22x22/mimetypes/application-x-kicad-project.png
+%{_iconsbasedir}/24x24/mimetypes/application-x-kicad-project.png
+%{_iconsbasedir}/32x32/mimetypes/application-x-kicad-project.png
+%{_iconsbasedir}/48x48/apps/kicad.png
+%{_iconsbasedir}/48x48/mimetypes/application-x-kicad-project.png
+%{_iconsbasedir}/scalable/apps/kicad.svg
+%{_iconsbasedir}/scalable/mimetypes/application-x-kicad-project.svg
 %{_miconsdir}/%{name}.png
 %{_iconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
 %{_datadir}/applications/*
-%{_datadir}/pixmaps/%{name}.png
-%{_datadir}/pixmaps/%{name}_cvpcb.png
-%{_datadir}/pixmaps/%{name}_eeschema.png
-%{_datadir}/pixmaps/%{name}_gerbview.png
-%{_datadir}/pixmaps/%{name}_pcbnew.png
+%{_datadir}/mime/packages/kicad.xml
+%{_datadir}/mimelnk/application/x-kicad-project.desktop
+%{_datadir}/mimelnk/application/x-kicad-schematic.desktop
 %doc %{_datadir}/doc/%{name}
