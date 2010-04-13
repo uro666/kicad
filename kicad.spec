@@ -58,9 +58,9 @@ desktop-file-install --vendor='' \
 
 # create icons
 mkdir -p %{buildroot}%{_miconsdir} %{buildroot}%{_iconsdir} %{buildroot}%{_liconsdir}
-convert -resize 16x16 %{buildroot}%{_iconsscaldir}/%{name}.svg %{buildroot}%{_miconsdir}/%{name}.png
-convert -resize 32x32 %{buildroot}%{_iconsscaldir}/%{name}.svg %{buildroot}%{_iconsdir}/%{name}.png
-convert -resize 48x48 %{buildroot}%{_iconsscaldir}/%{name}.svg %{buildroot}%{_liconsdir}/%{name}.png
+convert -resize 16x16 %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg %{buildroot}%{_miconsdir}/%{name}.png
+convert -resize 32x32 %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg %{buildroot}%{_iconsdir}/%{name}.png
+convert -resize 48x48 %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg %{buildroot}%{_liconsdir}/%{name}.png
 
 %clean
 rm -rf %{buildroot}
