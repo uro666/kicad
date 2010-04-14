@@ -1,5 +1,3 @@
-%define _disable_ld_no_undefined 1
-%define _disable_ld_as_needed    1
 %define Werror_cflags            %nil
 
 %define name kicad
@@ -52,7 +50,7 @@ make -C build DESTDIR=%buildroot install
 # create desktop file
 desktop-file-install --vendor='' \
 	--remove-category='Scientific' \
-	--add-category='Science;Electronics' \
+	--add-category='Science;Electronics;Education' \
 	--dir=%buildroot%{_datadir}/applications \
 	%buildroot%{_datadir}/applications/*.desktop
 
@@ -81,14 +79,7 @@ rm -rf %{buildroot}
 %{_bindir}/*
 %{_prefix}/lib/%{name}/plugins/netlist_form_pads-pcb
 %{_datadir}/%{name}
-%{_iconsbasedir}/16x16/mimetypes/application-x-kicad-project.png
-%{_iconsbasedir}/22x22/mimetypes/application-x-kicad-project.png
-%{_iconsbasedir}/24x24/mimetypes/application-x-kicad-project.png
-%{_iconsbasedir}/32x32/mimetypes/application-x-kicad-project.png
-%{_iconsbasedir}/48x48/apps/kicad.png
-%{_iconsbasedir}/48x48/mimetypes/application-x-kicad-project.png
-%{_iconsbasedir}/scalable/apps/kicad.svg
-%{_iconsbasedir}/scalable/mimetypes/application-x-kicad-project.svg
+%{_iconsdir}/*/*/*
 %{_miconsdir}/%{name}.png
 %{_iconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
