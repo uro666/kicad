@@ -3,7 +3,7 @@
 %define name kicad
 %define version 20100314
 %define date 2010-03-14-svn-R2456-final
-%define release %mkrel 1
+%define release %mkrel 2
 
 Summary:  An open source software for the creation of electronic schematic diagrams
 Name: %{name}
