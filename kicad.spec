@@ -93,6 +93,8 @@ Kicad-doc is the documentation for kicad.
 
 %package locales
 Summary:	Kicad locales
+Version:  	%{docversion}
+Release:  	%{docrelease}
 Requires:	kicad
 BuildArch:	noarch
 
