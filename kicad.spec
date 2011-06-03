@@ -1,15 +1,15 @@
 %define Werror_cflags            %nil
 
 %define name kicad
-%define version 20100314
-%define date 2010-03-14-svn-R2456-final
-%define release %mkrel 2
+%define version 20110429
+%define date 2011-04-29-BZR2986
+%define release %mkrel 1
 
 Summary:  An open source software for the creation of electronic schematic diagrams
 Name: %{name}
 Version: %{version}
 Release: %{release}
-Source0: %{name}-sources-%{date}.tar.gz
+Source0: http://iut-tice.ujf-grenoble.fr/cao/%{name}-sources_%{date}.zip
 License: GPLv2+
 Group: Sciences/Computer science
 Url: http://www.lis.inpg.fr/realise_au_lis/kicad/
@@ -35,11 +35,11 @@ Kicad is a set of four softwares and a project manager:
 	Kicad:      project manager.
 
 %prep
-%setup -q -n %{name}
+%setup -q -n %{name}_sources
 
 %build
 export LC_ALL=C
-%cmake -DBUILD_SHARED_LIBS:BOOL=OFF
+%cmake -DBUILD_SHARED_LIBS:BOOL=OFF -DKICAD_STABLE_VERSION:BOOL=ON
 #cmake
 %make
 
@@ -77,7 +77,7 @@ rm -rf %{buildroot}
 %files
 %defattr(-,root,root)
 %{_bindir}/*
-%{_prefix}/lib/%{name}/plugins/netlist_form_pads-pcb
+%{_prefix}/lib/%{name}/plugins/netlist_form_pads-pcb.xsl
 %{_datadir}/%{name}
 %{_iconsdir}/*/*/*
 %{_miconsdir}/%{name}.png
