@@ -36,13 +36,13 @@
 %define docname kicad-doc
 %define docdate 20110602
 %define docrevision 216
-%define docversion 1.2.%{date}.bzr%{revision}
+%define docversion 1.2.%{docdate}.bzr%{docrevision}
 %define docrelease %mkrel 1
 
 %define libname kicad-library
 %define libdate 20101208
 %define librevision 109
-%define libversion 1.1.%{date}.bzr%{revision}
+%define libversion 1.1.%{libdate}.bzr%{librevision}
 %define librelease %mkrel 1
 
 Name:		%{name}
