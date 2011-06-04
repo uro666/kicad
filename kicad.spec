@@ -31,19 +31,19 @@
 %define date 20110525
 %define revision 3009
 %define version %{date}.bzr%{revision}
-%define release %mkrel 2
+%define release %mkrel 3
 
 %define docname kicad-doc
 %define docdate 20110602
 %define docrevision 216
 %define docversion 1.2.%{docdate}.bzr%{docrevision}
-%define docrelease %mkrel 2
+%define docrelease %mkrel 3
 
 %define libname kicad-library
 %define libdate 20101208
 %define librevision 109
 %define libversion 1.1.%{libdate}.bzr%{librevision}
-%define librelease %mkrel 2
+%define librelease %mkrel 3
 
 Name:		%{name}
 Summary:	An open source software for the creation of electronic schematic diagrams
