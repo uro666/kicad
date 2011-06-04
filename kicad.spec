@@ -31,19 +31,19 @@
 %define date 20110525
 %define revision 3009
 %define version %{date}.bzr%{revision}
-%define release %mkrel 3
+%define release %mkrel 4
 
 %define docname kicad-doc
 %define docdate 20110602
 %define docrevision 216
 %define docversion 1.2.%{docdate}.bzr%{docrevision}
-%define docrelease %mkrel 3
+%define docrelease %mkrel 4
 
 %define libname kicad-library
 %define libdate 20101208
 %define librevision 109
 %define libversion 1.1.%{libdate}.bzr%{librevision}
-%define librelease %mkrel 3
+%define librelease %mkrel 4
 
 Name:		%{name}
 Summary:	An open source software for the creation of electronic schematic diagrams
@@ -62,9 +62,9 @@ BuildRequires:	imagemagick
 BuildRequires:	boost-devel
 BuildRequires:	cmake
 BuildRequires:	desktop-file-utils
-Requires:	%{name}-library
-Requires:	%{name}-doc
-Suggests:	%{name}-locales
+Requires:	%{libname} = %{libversion}-%{librelease}
+Requires:	%{docname} = %{docversion}-%{docrelease}
+Suggests:	%{name}-locales = %{docversion}-%{docrelease}
 
 %description
 Kicad is an open source (GPL) software for the creation of electronic 
@@ -83,6 +83,7 @@ Summary:  	Documentation for kicad (creation of electronic schematic diagrams)
 Version:  	%{docversion}
 Release:  	%{docrelease}
 License:  	GPL
+Requires:	%{name}
 BuildArch:	noarch
 
 %description doc
@@ -95,7 +96,8 @@ Kicad-doc is the documentation for kicad.
 Summary:	Kicad locales
 Version:  	%{docversion}
 Release:  	%{docrelease}
-Requires:	kicad
+License:  	GPL
+Requires:	%{name}
 BuildArch:	noarch
 
 %description locales
@@ -109,6 +111,7 @@ Summary:  	Library for kicad (creation of electronic schematic diagrams)
 Version:  	%{libversion}
 Release:  	%{librelease}
 License:  	GPL
+Requires:	%{name}
 BuildArch:	noarch
 
 %description library
