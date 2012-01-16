@@ -28,21 +28,21 @@
 # 216: Andrey Fedorushkov 2011-06-02 update russian GUI
 
 %define name kicad
-%define date 20110525
-%define revision 3009
+%define date 20111228
+%define revision 3254
 %define version %{date}.bzr%{revision}
 
 %define docname kicad-doc
-%define docdate 20110602
-%define docrevision 216
+%define docdate 20111221
+%define docrevision 303
 %define docversion %{docdate}.bzr%{docrevision}
 
 %define libname kicad-library
-%define libdate 20101208
-%define librevision 109
+%define libdate 20111126
+%define librevision 112
 %define libversion %{libdate}.bzr%{librevision}
 
-%define release %mkrel 6
+%define release %mkrel 1
 
 Name:		%{name}
 Summary:	An open source software for the creation of electronic schematic diagrams
@@ -54,8 +54,7 @@ Source2:	%{libname}-bzr%{librevision}.tar.bz2
 License:	GPLv2+
 Group:		Sciences/Computer science
 Url:		http://www.lis.inpg.fr/realise_au_lis/kicad/
-BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-buildroot
-BuildRequires:	wxGTK-devel >= 2.6
+BuildRequires:	wxgtku-devel
 BuildRequires:	mesa-common-devel
 BuildRequires:	imagemagick
 BuildRequires:	boost-devel
@@ -395,7 +394,7 @@ pushd %{name}
 popd
 
 %install
-rm -rf %{buildroot}
+%__rm -rf %{buildroot}
 
 cd ../
 
@@ -428,18 +427,7 @@ pushd %{name}
 popd
 
 %clean
-rm -rf %{buildroot}
-
-%if %mdkversion < 200900
-%post
-%{update_menus}
-%endif
-
-%if %mdkversion < 200900
-%postun
-%{clean_menus}
-%endif
-
+%__rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root)
