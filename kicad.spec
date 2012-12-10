@@ -1,5 +1,9 @@
 %define Werror_cflags            %nil
 
+# Generated debug package is empty and rpmlint rejects build
+%define _enable_debug_packages %{nil}
+%define debug_package %{nil}
+
 # To create source package: 
 # bzr branch lp:kicad/stable
 # 
@@ -28,8 +32,8 @@
 # 216: Andrey Fedorushkov 2011-06-02 update russian GUI
 
 %define name kicad
-%define date 20111228
-%define revision 3254
+%define date 20120119
+%define revision 3256
 %define version %{date}.bzr%{revision}
 
 %define docname kicad-doc
@@ -38,22 +42,34 @@
 %define docversion %{docdate}.bzr%{docrevision}
 
 %define libname kicad-library
-%define libdate 20111126
-%define librevision 112
+%define libdate 20120119
+%define librevision 114
 %define libversion %{libdate}.bzr%{librevision}
-
-%define release %mkrel 1
 
 Name:		%{name}
 Summary:	An open source software for the creation of electronic schematic diagrams
 Version:	%{version}
-Release:	%{release}
-Source0:	%{name}-sources-bzr%{revision}.tar.bz2
-Source1:	%{docname}-bzr%{docrevision}.tar.bz2
-Source2:	%{libname}-bzr%{librevision}.tar.bz2
+Release:	1
 License:	GPLv2+
 Group:		Sciences/Computer science
 Url:		http://www.lis.inpg.fr/realise_au_lis/kicad/
+Source0:	%{name}-sources-bzr%{revision}.tar.bz2
+Source1:	%{docname}-bzr%{docrevision}.tar.bz2
+Source2:	%{libname}-bzr%{librevision}.tar.bz2
+
+# Fedora & upstream patches
+Patch11:	%{name}-2011.07.12-fix-linking.patch
+Patch12:	%{name}-2011.07.12-boost-polygon-declare-gtlsort-earlier.patch
+Patch13:	%{name}-2012.01.19-fix-linking.patch
+Patch14:	%{name}-2012.01.19-fix-bom-in-python.patch
+Patch20:	%{name}-2012.01.19-fix-plotting-scale.patch
+Patch21:	%{name}-2012.01.19-move-up-junction-button.rev3371.patch
+Patch22:	%{name}-2012.01.19-thermal-relief.rev3281.patch
+Patch23:	%{name}-2012.01.19-undo-redo-auto.rev3297.patch
+Patch24:	%{name}-2012.01.19-cvpcb-preview.rev3303.patch
+Patch25:	%{name}-2012.01.19-pcb-calculation.rev3328.patch
+Patch26:	%{name}-2012.01.19-ps-plotting-width-correction.rev3342.patch
+
 BuildRequires:	wxgtku-devel
 BuildRequires:	mesa-common-devel
 BuildRequires:	imagemagick
@@ -77,10 +93,9 @@ Kicad is a set of four softwares and a project manager:
 	Kicad:      project manager.
 
 %package doc
-Summary:  	Documentation for kicad (creation of electronic schematic diagrams)
-Version:  	%{docversion}
-Release:  	%{release}
-License:  	GPL
+Summary:	Documentation for kicad (creation of electronic schematic diagrams)
+Version:	%{docversion}
+License:	GPL
 Requires:	%{name}
 BuildArch:	noarch
 
@@ -92,9 +107,8 @@ Kicad-doc is the documentation for kicad.
 
 %package locales-ca
 Summary:	Catalan Kicad locales
-Version:  	%{docversion}
-Release:  	%{release}
-License:  	GPL
+Version:	%{docversion}
+License:	GPL
 Requires:	%{name}
 Provides:	%{name}-locale
 BuildArch:	noarch
@@ -107,9 +121,8 @@ Kicad-locales provides Catalan locales for kicad.
 
 %package locales-cs
 Summary:	Czech Kicad locales
-Version:  	%{docversion}
-Release:  	%{release}
-License:  	GPL
+Version:	%{docversion}
+License:	GPL
 Requires:	%{name}
 Provides:	%{name}-locale
 BuildArch:	noarch
@@ -122,9 +135,8 @@ Kicad-locales provides Czech locales for kicad.
 
 %package locales-de
 Summary:	German Kicad locales
-Version:  	%{docversion}
-Release:  	%{release}
-License:  	GPL
+Version:	%{docversion}
+License:	GPL
 Requires:	%{name}
 Provides:	%{name}-locale
 BuildArch:	noarch
@@ -137,9 +149,8 @@ Kicad-locales provides German locales for kicad.
 
 %package locales-es
 Summary:	Spanish Kicad locales
-Version:  	%{docversion}
-Release:  	%{release}
-License:  	GPL
+Version:	%{docversion}
+License:	GPL
 Requires:	%{name}
 Provides:	%{name}-locale
 BuildArch:	noarch
@@ -152,9 +163,8 @@ Kicad-locales provides Spanish locales for kicad.
 
 %package locales-fi
 Summary:	Finnish Kicad locales
-Version:  	%{docversion}
-Release:  	%{release}
-License:  	GPL
+Version:	%{docversion}
+License:	GPL
 Requires:	%{name}
 Provides:	%{name}-locale
 BuildArch:	noarch
@@ -167,9 +177,8 @@ Kicad-locales provides Finnish locales for kicad.
 
 %package locales-fr
 Summary:	French Kicad locales
-Version:  	%{docversion}
-Release:  	%{release}
-License:  	GPL
+Version:	%{docversion}
+License:	GPL
 Requires:	%{name}
 Provides:	%{name}-locale
 BuildArch:	noarch
@@ -182,9 +191,9 @@ Kicad-locales provides French locales for kicad.
 
 %package locales-hu
 Summary:	Hungarian Kicad locales
-Version:  	%{docversion}
-Release:  	%{release}
-License:  	GPL
+Version:	%{docversion}
+Release:	%{release}
+License:	GPL
 Requires:	%{name}
 Provides:	%{name}-locale
 BuildArch:	noarch
@@ -197,9 +206,8 @@ Kicad-locales provides Hungarian locales for kicad.
 
 %package locales-it
 Summary:	Italian Kicad locales
-Version:  	%{docversion}
-Release:  	%{release}
-License:  	GPL
+Version:	%{docversion}
+License:	GPL
 Requires:	%{name}
 Provides:	%{name}-locale
 BuildArch:	noarch
@@ -212,9 +220,8 @@ Kicad-locales provides Italian locales for kicad.
 
 %package locales-ja
 Summary:	Japanese Kicad locales
-Version:  	%{docversion}
-Release:  	%{release}
-License:  	GPL
+Version:	%{docversion}
+License:	GPL
 Requires:	%{name}
 Provides:	%{name}-locale
 BuildArch:	noarch
@@ -227,9 +234,8 @@ Kicad-locales provides Japanese locales for kicad.
 
 %package locales-ko
 Summary:	Korean Kicad locales
-Version:  	%{docversion}
-Release:  	%{release}
-License:  	GPL
+Version:	%{docversion}
+License:	GPL
 Requires:	%{name}
 Provides:	%{name}-locale
 BuildArch:	noarch
@@ -242,9 +248,8 @@ Kicad-locales provides Korean locales for kicad.
 
 %package locales-nl
 Summary:	Dutch Kicad locales
-Version:  	%{docversion}
-Release:  	%{release}
-License:  	GPL
+Version:	%{docversion}
+License:	GPL
 Requires:	%{name}
 Provides:	%{name}-locale
 BuildArch:	noarch
@@ -257,9 +262,8 @@ Kicad-locales provides Dutch locales for kicad.
 
 %package locales-pl
 Summary:	Polish Kicad locales
-Version:  	%{docversion}
-Release:  	%{release}
-License:  	GPL
+Version:	%{docversion}
+License:	GPL
 Requires:	%{name}
 Provides:	%{name}-locale
 BuildArch:	noarch
@@ -272,9 +276,8 @@ Kicad-locales provides Polish locales for kicad.
 
 %package locales-pt
 Summary:	Portuguese Kicad locales
-Version:  	%{docversion}
-Release:  	%{release}
-License:  	GPL
+Version:	%{docversion}
+License:	GPL
 Requires:	%{name}
 Provides:	%{name}-locale
 BuildArch:	noarch
@@ -287,9 +290,8 @@ Kicad-locales provides Portuguese locales for kicad.
 
 %package locales-ru
 Summary:	Russian Kicad locales
-Version:  	%{docversion}
-Release:  	%{release}
-License:  	GPL
+Version:	%{docversion}
+License:	GPL
 Requires:	%{name}
 Provides:	%{name}-locale
 BuildArch:	noarch
@@ -302,9 +304,8 @@ Kicad-locales provides Russian locales for kicad.
 
 %package locales-sl
 Summary:	Slovenian Kicad locales
-Version:  	%{docversion}
-Release:  	%{release}
-License:  	GPL
+Version:	%{docversion}
+License:	GPL
 Requires:	%{name}
 Provides:	%{name}-locale
 BuildArch:	noarch
@@ -317,9 +318,8 @@ Kicad-locales provides Slovenian locales for kicad.
 
 %package locales-sv
 Summary:	Salvadoran Kicad locales
-Version:  	%{docversion}
-Release:  	%{release}
-License:  	GPL
+Version:	%{docversion}
+License:	GPL
 Requires:	%{name}
 Provides:	%{name}-locale
 BuildArch:	noarch
@@ -332,9 +332,8 @@ Kicad-locales provides Salvadoran locales for kicad.
 
 %package locales-zh-cn
 Summary:	Chinese Kicad locales
-Version:  	%{docversion}
-Release:  	%{release}
-License:  	GPL
+Version:	%{docversion}
+License:	GPL
 Requires:	%{name}
 Provides:	%{name}-locale
 BuildArch:	noarch
@@ -346,10 +345,9 @@ schematic diagrams and printed circuit board artwork.
 Kicad-locales provides Chinese locales for kicad.
 
 %package library
-Summary:  	Library for kicad (creation of electronic schematic diagrams)
-Version:  	%{libversion}
-Release:  	%{release}
-License:  	GPL
+Summary:	Library for kicad (creation of electronic schematic diagrams)
+Version:	%{libversion}
+License:	GPL
 Requires:	%{name}
 BuildArch:	noarch
 
@@ -363,6 +361,19 @@ Kicad-library is a set of library needed by kicad.
 %setup -q -T -b 0 -n %{name}
 %setup -q -T -b 1 -n %{docname}
 %setup -q -T -b 2 -n %{libname}
+pushd ../%{name}
+%patch11 -p0 -b .fix-linking1
+%patch12 -p0 -b .gcc-4.7
+%patch13 -p0 -b .fix-linking2
+%patch14 -p1 -b .fix-bom-in-python
+%patch20 -p0 -b .fix-plotting-scale
+%patch21 -p0 -b .junction-button
+%patch22 -p0 -b .thermal-relief
+%patch23 -p1 -b .undo-redo
+%patch24 -p1 -b .cvpcb-preview
+%patch25 -p0 -b .pcb-calculation
+%patch26 -p1 -b .width-correction
+popd
 
 %build
 export LC_ALL=C
@@ -394,30 +405,28 @@ pushd %{name}
 popd
 
 %install
-%__rm -rf %{buildroot}
-
 cd ../
 
 # Installing kicad-doc
 pushd %{docname}
-	make -C build DESTDIR=%buildroot install
+	%makeinstall_std -C build
 popd
 
 # Installing kicad-library
 pushd %{libname}
-	make -C build DESTDIR=%buildroot install
+	%makeinstall_std -C build
 popd
 
 # Installing kicad
 pushd %{name}
-	make -C build DESTDIR=%buildroot install
+	%makeinstall_std -C build
 
 	# create desktop file
 	desktop-file-install --vendor='' \
 		--remove-category='Scientific' \
 		--add-category='Science;Electronics;Education' \
-		--dir=%buildroot%{_datadir}/applications \
-		%buildroot%{_datadir}/applications/*.desktop
+		--dir=%{buildroot}%{_datadir}/applications \
+		%{buildroot}%{_datadir}/applications/*.desktop
 
 	# create icons
 	mkdir -p %{buildroot}%{_miconsdir} %{buildroot}%{_iconsdir} %{buildroot}%{_liconsdir}
@@ -426,11 +435,7 @@ pushd %{name}
 	convert -resize 48x48 %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg %{buildroot}%{_liconsdir}/%{name}.png
 popd
 
-%clean
-%__rm -rf %{buildroot}
-
 %files
-%defattr(-,root,root)
 %{_bindir}/*
 %{_prefix}/lib/%{name}/plugins/netlist_form_pads-pcb.xsl
 %{_iconsdir}/*/*/*
@@ -445,78 +450,165 @@ popd
 %{_datadir}/mimelnk/application/x-kicad-schematic.desktop
 
 %files doc
-%defattr(-,root,root)
 %doc %{_datadir}/doc/%{name}
 
 %files locales-ca
-%defattr(-,root,root)
 %{_datadir}/%{name}/internat/ca/
 
 %files locales-cs
-%defattr(-,root,root)
 %{_datadir}/%{name}/internat/cs/
 
 %files locales-de
-%defattr(-,root,root)
 %{_datadir}/%{name}/internat/de/
 
 %files locales-es
-%defattr(-,root,root)
 %{_datadir}/%{name}/internat/es/
 
 %files locales-fi
-%defattr(-,root,root)
 %{_datadir}/%{name}/internat/fi/
 
 %files locales-fr
-%defattr(-,root,root)
 %{_datadir}/%{name}/internat/fr/
 
 %files locales-hu
-%defattr(-,root,root)
 %{_datadir}/%{name}/internat/hu/
 
 %files locales-it
-%defattr(-,root,root)
 %{_datadir}/%{name}/internat/it/
 
 %files locales-ja
-%defattr(-,root,root)
 %{_datadir}/%{name}/internat/ja/
 
 %files locales-ko
-%defattr(-,root,root)
 %{_datadir}/%{name}/internat/ko/
 
 %files locales-nl
-%defattr(-,root,root)
 %{_datadir}/%{name}/internat/nl/
 
 %files locales-pl
-%defattr(-,root,root)
 %{_datadir}/%{name}/internat/pl/
 
 %files locales-pt
-%defattr(-,root,root)
 %{_datadir}/%{name}/internat/pt/
 
 %files locales-ru
-%defattr(-,root,root)
 %{_datadir}/%{name}/internat/ru/
 
 %files locales-sl
-%defattr(-,root,root)
 %{_datadir}/%{name}/internat/sl
 
 %files locales-sv
-%defattr(-,root,root)
 %{_datadir}/%{name}/internat/sv/
 
 %files locales-zh-cn
-%defattr(-,root,root)
 %{_datadir}/%{name}/internat/zh_CN/
 
 %files library
-%defattr(-,root,root)
 %{_datadir}/%{name}/library
 %{_datadir}/%{name}/modules
+
+
+%changelog
+* Mon Jan 16 2012 Andrey Bondrov <abondrov@mandriva.org> 20111228.bzr3254-1mdv2011.0
++ Revision: 761801
+- New revisions: kicad 3254, library 112, doc 303. Build against utf8 wxGTK2.8
+
+* Sun Jun 05 2011 Alexandre Lissy <alissy@mandriva.com> 20110525.bzr3009-6
++ Revision: 682787
+- Only one %%mkrel
+- Split kicad-locales into several package, each providing kicad-locales-X and kicad-locale
+- Adding Suggests from kicad to kicad-locale
+
+* Sun Jun 05 2011 Alexandre Lissy <alissy@mandriva.com> 20110525.bzr3009-5
++ Revision: 682786
+- Unifying versions number
+- Changing requires
+- Adding missing License
+- Release bump, package eaten by build system :(
+- Updating release ...
+- Fix bad version number for kicad-locales
+
+* Fri Jun 03 2011 Alexandre Lissy <alissy@mandriva.com> 20110525.bzr3009-1
++ Revision: 682668
+- Fixing typo in versions definitions
+- Unification of all kicad sources packages
+- Updating kicad, kicad-doc and kicad-library to latest (stable) bazaar revsion
+- Adding new kicad-locales package
+- Setting noarch for kicad-doc, kicad-library and kicad-locales
+- Updating Kicad to latest release
+
+* Mon Dec 06 2010 Oden Eriksson <oeriksson@mandriva.com> 20100314-2mdv2011.0
++ Revision: 612604
+- the mass rebuild of 2010.1 packages
+
+* Wed Apr 14 2010 Funda Wang <fwang@mandriva.org> 20100314-1mdv2010.1
++ Revision: 534645
+- clean old switches
+
+  + trem <trem@mandriva.org>
+    - remove use of iconscaldir
+    - update to 20100314
+
+* Wed Jul 15 2009 trem <trem@mandriva.org> 20090216-1mdv2010.0
++ Revision: 396494
+- update to 2009-02-16
+- add lot of patches to fix printf format
+
+  + Oden Eriksson <oeriksson@mandriva.com>
+    - lowercase ImageMagick
+
+* Tue Aug 26 2008 trem <trem@mandriva.org> 20080715-4mdv2009.0
++ Revision: 276407
+- new mdvrelease
+- replace kicad-20080715-fix-desktop.patch by fix_desktop.patch
+
+* Tue Aug 26 2008 Funda Wang <fwang@mandriva.org> 20080715-3mdv2009.0
++ Revision: 276396
+- drop our own desktop file
+
+* Tue Aug 26 2008 Funda Wang <fwang@mandriva.org> 20080715-2mdv2009.0
++ Revision: 276135
+- fix license
+- fix desktop file
+
+* Thu Aug 21 2008 trem <trem@mandriva.org> 20080715-1mdv2009.0
++ Revision: 274944
+- update to 20080715
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - rebuild
+    - rebuild
+    - drop old menu
+    - kill re-definition of %%buildroot on Pixel's request
+    - import kicad
+
+  + Pixel <pixel@mandriva.com>
+    - rpm filetriggers deprecates update_menus/update_scrollkeeper/update_mime_database/update_icon_cache/update_desktop_database/post_install_gconf_schemas
+
+  + Olivier Blin <blino@mandriva.org>
+    - restore BuildRoot
+
+
+* Tue Aug  1 2006 Couriousous <couriousous@mandriva.org> 20060626-1mdv2007.0
+- XDG
+- 20060626
+
+* Tue Apr 18 2006 Nicolas Lécureuil <neoclust@mandriva.org> 20060321-2mdk
+- Fix BuildRequires
+- use mkrel
+
+* Mon Apr 17 2006 Couriousous <couriousous@mandriva.org> 20060321-1mdk
+- 20060321
+
+* Fri Sep  9 2005 Couriousous <couriousous@mandriva.org> 20050906-1mdk
+- 20050906
+
+* Tue Jul 26 2005 Couriousous <couriousous@mandriva.org> 20050725-1mdk
+- 20050725
+- Kicad is now FHS complient
+
+* Sun Jul 17 2005 Couriousous <couriousous@mandriva.org> 20050704-1mdk
+- First Mandriva release
+- Patch for gcc4
+- Patch for amd64
+
