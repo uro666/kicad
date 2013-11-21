@@ -1,4 +1,7 @@
 sources:
-  "kicad-doc-bzr303.tar.bz2": 3503587bd091f8c15f2633f168c90514f63b8a50
-  "kicad-library-bzr114.tar.bz2": 19662fef6745d49f959290b50b7f7d9bea29e104
-  "kicad-sources-bzr3256.tar.bz2": 742cb2b99c7e99fabfe50397c0573743dc013542
+  kicad-doc-bzr303.tar.bz2: 3503587bd091f8c15f2633f168c90514f63b8a50
+  kicad-doc-bzr493.tar.bz2: fa02091bffaa5d8c16d9620f03de5fe12a5118ef
+  kicad-library-bzr114.tar.bz2: 19662fef6745d49f959290b50b7f7d9bea29e104
+  kicad-library-bzr274.tar.bz2: afea610c378072798e44b58618aeadbb1410c7b8
+  kicad-sources-bzr3256.tar.bz2: 742cb2b99c7e99fabfe50397c0573743dc013542
+  kicad-sources-bzr4024.tar.bz2: 06b6f069e7e59b1a0235543c372e412dd254ec6d
