@@ -19,7 +19,7 @@
 %define	librevision 274
 %define	libversion %{libdate}.bzr%{librevision}
 
-%define	release %mkrel 2
+%define release 3
 
 Name:		%{name}
 Summary:	An open source program for the creation of electronic schematic diagrams
