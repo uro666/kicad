@@ -5,19 +5,13 @@
 # specfile fragment
 
 %define	name kicad
-%define	date 20130725
-%define	revision 4024
-%define	version %{date}.bzr%{revision}
+%define	version 4.0.1
 
 %define	docname kicad-doc
-%define	docdate 20130926
-%define	docrevision 493
-%define	docversion %{docdate}.bzr%{docrevision}
+%define	docversion 4.0.1
 
 %define	libname kicad-library
-%define	libdate 20130923
-%define	librevision 274
-%define	libversion %{libdate}.bzr%{librevision}
+%define	libversion 4.0.1
 
 %define release 3
 
@@ -25,18 +19,21 @@ Name:		%{name}
 Summary:	An open source program for the creation of electronic schematic diagrams
 Version:	%{version}
 Release:	%{release}
-Source0:	%{name}-sources-bzr%{revision}.tar.bz2
-Source1:	%{docname}-bzr%{docrevision}.tar.bz2
-Source2:	%{libname}-bzr%{librevision}.tar.bz2
+Source0:	%{name}-%{version}.tar.xz
+Source1:	%{docname}-%{docversion}.tar.gz
+Source2:	%{libname}-%{libversion}.tar.gz
 License:	GPLv2+
 Group:		Sciences/Computer science
 Url:		http://www.lis.inpg.fr/realise_au_lis/kicad/
-BuildRequires:	wxgtku2.8-devel
+BuildRequires:	wxgtku3.0-devel
 BuildRequires:	mesa-common-devel
 BuildRequires:	imagemagick
 BuildRequires:	boost-devel
 BuildRequires:	cmake
 BuildRequires:	desktop-file-utils
+BuildRequires:	po4a
+BuildRequires:	asciidoc
+BuildRequires:	dblatex
 Requires:	%{libname}
 Requires:	%{docname}
 Suggests:	%{name}-locale
@@ -370,9 +367,9 @@ schematic diagrams and printed circuit board artwork.
 Kicad-library is a set of library needed by kicad.
 
 %prep
-%setup -q -T -b 0 -n %{name}
-%setup -q -T -b 1 -n %{docname}
-%setup -q -T -b 2 -n %{libname}
+%setup -q -T -b 0 
+%setup -q -T -b 1 -n %{docname}-%{docversion}
+%setup -q -T -b 2 -n %{libname}-%{docversion}
 cd ..
 
 %build
@@ -381,16 +378,17 @@ export LC_ALL=C
 cd ../
 
 # Building kicad-doc
-pushd %{docname}
+pushd %{docname}-%{docversion}
 	%cmake \
 		-DKICAD_STABLE_VERSION:BOOL=ON \
 		-DKICAD_wxUSE_UNICODE=ON \
-		-DCMAKE_BUILD_TYPE=Release
+		-DCMAKE_BUILD_TYPE=Release \
+		-DBUILD_FORMATS=html
 	%make
 popd
 
 # Building kicad-library
-pushd %{libname}
+pushd %{libname}-%{libversion}
 	%cmake \
 		-DKICAD_STABLE_VERSION:BOOL=ON \
 		-DCMAKE_BUILD_TYPE=Release
@@ -398,7 +396,7 @@ pushd %{libname}
 popd
 
 # Building kicad
-pushd %{name}
+pushd %{name}-%{version}
 	%cmake \
 		-DBUILD_SHARED_LIBS:BOOL=OFF \
 		-DKICAD_STABLE_VERSION:BOOL=ON \
@@ -417,16 +415,16 @@ popd
 cd ../
 
 # Installing kicad-doc
-pushd %{docname}
+pushd %{docname}-%{docversion}
 	make -C build DESTDIR=%buildroot install
 popd
 
 # Installing kicad-library
-pushd %{libname}
+pushd %{libname}-%{docversion}
 	make -C build DESTDIR=%buildroot install
 popd
 
-# Installing kicad
+# Installing kicad-%{version}
 pushd %{name}
 	make -C build DESTDIR=%buildroot install
 
