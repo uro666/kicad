@@ -34,6 +34,7 @@ BuildRequires:	po4a
 BuildRequires:	asciidoc
 BuildRequires:	a2x
 BuildRequires:	dblatex
+BuildRequires:	perl(Unicode::GCString)
 Requires:	%{libname}
 Requires:	%{docname}
 
