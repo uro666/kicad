@@ -32,6 +32,7 @@ BuildRequires:	cmake
 BuildRequires:	desktop-file-utils
 BuildRequires:	po4a
 BuildRequires:	asciidoc
+BuildRequires:	a2x
 BuildRequires:	dblatex
 Requires:	%{libname}
 Requires:	%{docname}
