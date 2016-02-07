@@ -1,5 +1,6 @@
 %define	Werror_cflags	%nil
 %define	debug_package	%nil
+%define _disable_lto 1
 
 # Use ./update.sh to generate latest tarballs and the corresponding
 # specfile fragment
