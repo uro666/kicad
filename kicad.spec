@@ -6,7 +6,7 @@
 # specfile fragment
 
 %define	name kicad
-%define	version 4.0.1
+%define	version 4.0.2
 
 %define	docname kicad-doc
 
@@ -18,7 +18,7 @@ Name:		%{name}
 Summary:	An open source program for the creation of electronic schematic diagrams
 Epoch:		1
 Version:	%{version}
-Release:	2
+Release:	1
 Source0:	%{name}-%{version}.tar.xz
 Source1:	%{docname}-%{version}.tar.gz
 Source2:	%{libname}-%{version}.tar.gz
