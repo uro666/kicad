@@ -18,7 +18,7 @@ Name:		%{name}
 Summary:	An open source program for the creation of electronic schematic diagrams
 Epoch:		1
 Version:	%{version}
-Release:	2
+Release:	3
 Source0:	%{name}-%{version}.tar.xz
 Source1:	%{docname}-%{version}.tar.gz
 Source2:	%{libname}-%{version}.tar.gz
@@ -87,6 +87,8 @@ Kicad-library is a set of library needed by kicad.
 %setup -q -T -b 2 -n %{libname}-%{version}
 %setup -q -T -b 3 -n %{i18nname}-%{version}
 cd ..
+sed -i 's!boost/context/fcontext.hpp!boost/context/detail/fcontext.hpp!g' %{name}-%{version}/include/tool/coroutine.h
+
 
 %build
 %setup_compile_flags
