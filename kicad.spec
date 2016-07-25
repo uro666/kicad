@@ -28,6 +28,8 @@ Source0:	%{name}-%{version}-%{date}.tar.xz
 Source1:	%{docname}-%{version}-%{date}.tar.xz
 Source2:	%{libname}-%{version}-%{date}.tar.xz
 Source3:	%{i18nname}-%{version}-%{date}.tar.xz
+Source4:	get_kicad.sh
+Source100:	kicad.rpmlintrc
 License:	GPLv2+
 Group:		Sciences/Computer science
 Url:		http://www.lis.inpg.fr/realise_au_lis/kicad/
