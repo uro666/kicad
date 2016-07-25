@@ -1,6 +1,7 @@
 %define	Werror_cflags	%nil
 %define	debug_package	%nil
 %define _disable_lto 1
+%define date 20160724
 
 # Use ./update.sh to generate latest tarballs and the corresponding
 # specfile fragment
@@ -19,10 +20,14 @@ Summary:	An open source program for the creation of electronic schematic diagram
 Epoch:		1
 Version:	%{version}
 Release:	3
-Source0:	%{name}-%{version}.tar.xz
-Source1:	%{docname}-%{version}.tar.gz
-Source2:	%{libname}-%{version}.tar.gz
-Source3:	%{i18nname}-%{version}.tar.gz
+# git clone https://github.com/KiCad/kicad-source-mirror.git
+# pushd kicad-source-mirror
+# git archive --format=tar --prefix %{name}-%{version}-$(date +%Y%m%d)/ HEAD | xz -vf > ../%{name}-%{version}-$(date +%Y%m%d).tar.xz
+# popd
+Source0:	%{name}-%{version}-%{date}.tar.xz
+Source1:	%{docname}-%{version}-%{date}.tar.xz
+Source2:	%{libname}-%{version}-%{date}.tar.xz
+Source3:	%{i18nname}-%{version}-%{date}.tar.xz
 License:	GPLv2+
 Group:		Sciences/Computer science
 Url:		http://www.lis.inpg.fr/realise_au_lis/kicad/
@@ -35,12 +40,14 @@ BuildRequires:	cairo-devel
 BuildRequires:	openssl-devel
 BuildRequires:	gomp-devel
 BuildRequires:	cmake
+BuildRequires:	pkgconfig(glm)
+BuildRequires:	curl-devel
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	po4a
 BuildRequires:	asciidoc
 BuildRequires:	a2x
-BuildRequires:	dblatex
+#BuildRequires:	dblatex
 BuildRequires:	perl(Unicode::GCString)
 Requires:	%{libname}
 Requires:	%{docname}
@@ -82,13 +89,18 @@ schematic diagrams and printed circuit board artwork.
 Kicad-library is a set of library needed by kicad.
 
 %prep
-%setup -q -T -b 0 
-%setup -q -T -b 1 -n %{docname}-%{version}
-%setup -q -T -b 2 -n %{libname}-%{version}
-%setup -q -T -b 3 -n %{i18nname}-%{version}
+%setup -q -T -b 0 -n %{name}-%{version}-%{date}
+%setup -q -T -b 1 -n %{docname}-%{version}-%{date}
+%setup -q -T -b 2 -n %{libname}-%{version}-%{date}
+%setup -q -T -b 3 -n %{i18nname}-%{version}-%{date}
 cd ..
-sed -i 's!boost/context/fcontext.hpp!boost/context/detail/fcontext.hpp!g' %{name}-%{version}/include/tool/coroutine.h
 
+# proper libname policy
+pushd %{name}-%{version}-%{date}
+sed -i "s|KICAD_PLUGINS lib/kicad/plugins|KICAD_PLUGINS %{_lib}/kicad/plugins|g" CMakeLists.txt
+# KICAD_LIB ${CMAKE_INSTALL_PREFIX}/lib
+sed -i "s!CMAKE_INSTALL_PREFIX}/lib!CMAKE_INSTALL_PREFIX}/%{_lib}!g" CMakeLists.txt
+popd
 
 %build
 %setup_compile_flags
@@ -96,7 +108,7 @@ export LC_ALL=C
 cd ../
 
 # Building kicad-doc
-pushd %{docname}-%{version}
+pushd %{docname}-%{version}-%{date}
 	%cmake \
 		-DKICAD_STABLE_VERSION:BOOL=ON \
 		-DKICAD_wxUSE_UNICODE=ON \
@@ -106,7 +118,7 @@ pushd %{docname}-%{version}
 popd
 
 # Building kicad-library
-pushd %{libname}-%{version}
+pushd %{libname}-%{version}-%{date}
 	%cmake \
 		-DKICAD_STABLE_VERSION:BOOL=ON \
 		-DCMAKE_BUILD_TYPE=Release
@@ -114,13 +126,16 @@ pushd %{libname}-%{version}
 popd
 
 # Building kicad
-pushd %{name}-%{version}
+pushd %{name}-%{version}-%{date}
+
 	%cmake \
 		-DBUILD_SHARED_LIBS:BOOL=OFF \
 		-DKICAD_STABLE_VERSION:BOOL=ON \
 		-DKICAD_wxUSE_UNICODE=ON \
 		-DCMAKE_BUILD_TYPE=Release \
-		-DKICAD_SKIP_BOOST=ON
+		-DKICAD_SKIP_BOOST=ON \
+		-DKICAD_REPO_NAME=stable \
+		-DBUILD_GITHUB_PLUGIN=ON
 
 	#ugly workaround to fix build
 	#dunno what causes the extra ; in CXX_FLAGS which causes the failure
@@ -132,7 +147,7 @@ popd
 
 
 # Building kicad-i18n
-pushd %{i18nname}-%{version}
+pushd %{i18nname}-%{version}-%{date}
 	%cmake \
 		-DKICAD_STABLE_VERSION:BOOL=ON \
 		-DCMAKE_BUILD_TYPE=Release \
@@ -144,23 +159,23 @@ popd
 cd ../
 
 # Installing kicad-doc
-pushd %{docname}-%{version}
+pushd %{docname}-%{version}-%{date}
 	make -C build DESTDIR=%buildroot install
 popd
 
 # Installing kicad-library
-pushd %{libname}-%{version}
+pushd %{libname}-%{version}-%{date}
 	make -C build DESTDIR=%buildroot install
 popd
 
 # Installing kicad-i18n
-pushd %{i18nname}-%{version}
+pushd %{i18nname}-%{version}-%{date}
 	make -C build DESTDIR=%buildroot install
 	%find_lang %{name}
 popd
 
 # Installing kicad-%{version}
-pushd %{name}-%{version}
+pushd %{name}-%{version}-%{date}
 	make -C build DESTDIR=%buildroot install
 
 	# create desktop file
@@ -179,7 +194,9 @@ popd
 
 %files -f %{name}.lang
 %{_bindir}/*
-%{_prefix}/lib/%{name}/plugins/*.xsl
+%{_libdir}/%{name}/plugins/*.xsl
+%{_libdir}/%{name}/plugins/3d/*.so
+%{_libdir}/libkicad_3dsg.so*
 %{_iconsdir}/*/*/*
 %{_iconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
@@ -187,10 +204,8 @@ popd
 %{_datadir}/%{name}/demos/
 %{_datadir}/%{name}/template/
 %{_datadir}/applications
-%{_datadir}/mime/packages/kicad.xml
-%{_datadir}/mimelnk/application/x-kicad-project.desktop
-%{_datadir}/mimelnk/application/x-kicad-schematic.desktop
-%{_datadir}/mimelnk/application/x-kicad-pcb.desktop
+%{_datadir}/mime/packages/kicad-kicad.xml
+%{_datadir}/mime/packages/kicad-gerbers.xml
 
 %files doc
 %doc %{_datadir}/doc/%{name}
