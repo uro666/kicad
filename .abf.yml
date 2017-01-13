@@ -1,5 +1,5 @@
 sources:
-  kicad-4.0.2-20160724.tar.xz: 66a4f43ecbb7810e5e55e079726e38536b8bf69c
-  kicad-doc-4.0.2-20160724.tar.xz: 5dfdcaabcfad018c9b12ecd1ef38191e8c36e6a1
-  kicad-i18n-4.0.2-20160724.tar.xz: f307213d2ec398b8b95691f608e92fd5a2984c08
-  kicad-library-4.0.2-20160724.tar.xz: 2cb1fbcd2b5783f277d16285a72f01ad8a800bf1
+  kicad-4.0.5.tar.xz: e47f7c5f4104ff0b4c9973b316cb4e58f1ea3dd6
+  kicad-doc-4.0.5.tar.gz: 2e16c3ca69da20fefb76433cc5b2c4e1cc4b7d22
+  kicad-i18n-4.0.5.tar.gz: f9b8eb3986a8ea81ea61ea503e7c36720107ae96
+  kicad-library-4.0.5.tar.gz: 8c99152cad2d598e78516c30c9c0eced78a0a71e
