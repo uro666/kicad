@@ -108,6 +108,7 @@ popd
 
 %build
 %setup_compile_flags
+export CXX="%__cxx -std=c++11"
 export LC_ALL=C
 cd ../
 
