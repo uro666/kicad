@@ -31,6 +31,7 @@ Source3:	%{i18nname}-%{version}.tar.gz
 Source4:	get_kicad.sh
 Source100:	kicad.rpmlintrc
 Patch1:		boost-1.61.patch
+Patch2:		kicad-4.0.5-clang.patch
 License:	GPLv2+
 Group:		Sciences/Computer science
 Url:		http://www.kicad-pcb.org
@@ -101,6 +102,7 @@ cd ..
 # proper libname policy
 pushd %{name}-%{version}
 %patch1 -p1
+%patch2 -p1
 sed -i "s|KICAD_PLUGINS lib/kicad/plugins|KICAD_PLUGINS %{_lib}/kicad/plugins|g" CMakeLists.txt
 # KICAD_LIB ${CMAKE_INSTALL_PREFIX}/lib
 sed -i "s!CMAKE_INSTALL_PREFIX}/lib!CMAKE_INSTALL_PREFIX}/%{_lib}!g" CMakeLists.txt
