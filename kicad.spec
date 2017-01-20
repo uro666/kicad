@@ -19,7 +19,7 @@ Name:		%{name}
 Summary:	An open source program for the creation of electronic schematic diagrams
 Epoch:		1
 Version:	%{version}
-Release:	3
+Release:	4
 # git clone https://github.com/KiCad/kicad-source-mirror.git
 # pushd kicad-source-mirror
 # git archive --format=tar --prefix %{name}-%{version}-$(date +%Y%m%d)/ HEAD | xz -vf > ../%{name}-%{version}-$(date +%Y%m%d).tar.xz
@@ -35,7 +35,7 @@ Patch2:		kicad-4.0.5-clang.patch
 License:	GPLv2+
 Group:		Sciences/Computer science
 Url:		http://www.kicad-pcb.org
-BuildRequires:	wxgtku3.0-devel
+BuildRequires:	wxgtku3.0-gtk2-devel
 BuildRequires:	mesa-common-devel
 BuildRequires:	imagemagick
 BuildRequires:	boost-devel
@@ -142,7 +142,8 @@ pushd %{name}-%{version}
 		-DCMAKE_BUILD_TYPE=Release \
 		-DKICAD_SKIP_BOOST=ON \
 		-DKICAD_REPO_NAME=stable \
-		-DBUILD_GITHUB_PLUGIN=ON
+		-DBUILD_GITHUB_PLUGIN=ON \
+		-DwxWidgets_CONFIG_EXECUTABLE=%{_bindir}/wx-config-3.0-gtk2
 
 	#ugly workaround to fix build
 	#dunno what causes the extra ; in CXX_FLAGS which causes the failure
