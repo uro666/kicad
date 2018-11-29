@@ -19,7 +19,7 @@ Name:		%{name}
 Summary:	An open source program for the creation of electronic schematic diagrams
 Epoch:		1
 Version:	%{version}
-Release:	4
+Release:	1
 # git clone https://github.com/KiCad/kicad-source-mirror.git
 # pushd kicad-source-mirror
 # git archive --format=tar --prefix %{name}-%{version}-$(date +%Y%m%d)/ HEAD | xz -vf > ../%{name}-%{version}-$(date +%Y%m%d).tar.xz
@@ -44,7 +44,7 @@ BuildRequires:	cmake
 BuildRequires:	pkgconfig(glm)
 BuildRequires:	curl-devel
 BuildRequires:	opencascade-devel
-BuildRequires:	wxPythonGTK-devel
+BuildRequires:	wxPythonGTK-devel >= 3.0
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	po4a
