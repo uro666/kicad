@@ -7,7 +7,7 @@
 # specfile fragment
 
 %define	name kicad
-%define	version 4.0.5
+%define	version 5.0.1
 
 %define	docname kicad-doc
 
@@ -24,18 +24,15 @@ Release:	4
 # pushd kicad-source-mirror
 # git archive --format=tar --prefix %{name}-%{version}-$(date +%Y%m%d)/ HEAD | xz -vf > ../%{name}-%{version}-$(date +%Y%m%d).tar.xz
 # popd
-Source0:	%{name}-%{version}.tar.xz
+Source0:	https://launchpad.net/kicad/5.0/%{version}/+download/%{name}-%{version}.tar.xz
 Source1:	%{docname}-%{version}.tar.gz
-Source2:	%{libname}-%{version}.tar.gz
 Source3:	%{i18nname}-%{version}.tar.gz
 Source4:	get_kicad.sh
 Source100:	kicad.rpmlintrc
-Patch1:		boost-1.61.patch
-Patch2:		kicad-4.0.5-clang.patch
 License:	GPLv2+
 Group:		Sciences/Computer science
 Url:		http://www.kicad-pcb.org
-BuildRequires:	wxgtku3.0-gtk2-devel
+BuildRequires:	wxgtku3.0-devel
 BuildRequires:	mesa-common-devel
 BuildRequires:	imagemagick
 BuildRequires:	boost-devel
@@ -46,6 +43,8 @@ BuildRequires:	gomp-devel
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(glm)
 BuildRequires:	curl-devel
+BuildRequires:	opencascade-devel
+BuildRequires:	wxPythonGTK-devel
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	po4a
@@ -95,14 +94,11 @@ Kicad-library is a set of library needed by kicad.
 %prep
 %setup -q -T -b 0 -n %{name}-%{version}
 %setup -q -T -b 1 -n %{docname}-%{version}
-%setup -q -T -b 2 -n %{libname}-%{version}
 %setup -q -T -b 3 -n %{i18nname}-%{version}
 cd ..
 
 # proper libname policy
 pushd %{name}-%{version}
-%patch1 -p1
-%patch2 -p1
 sed -i "s|KICAD_PLUGINS lib/kicad/plugins|KICAD_PLUGINS %{_lib}/kicad/plugins|g" CMakeLists.txt
 # KICAD_LIB ${CMAKE_INSTALL_PREFIX}/lib
 sed -i "s!CMAKE_INSTALL_PREFIX}/lib!CMAKE_INSTALL_PREFIX}/%{_lib}!g" CMakeLists.txt
@@ -124,14 +120,6 @@ pushd %{docname}-%{version}
 	%make
 popd
 
-# Building kicad-library
-pushd %{libname}-%{version}
-	%cmake \
-		-DKICAD_STABLE_VERSION:BOOL=ON \
-		-DCMAKE_BUILD_TYPE=Release
-	%make
-popd
-
 # Building kicad
 pushd %{name}-%{version}
 
@@ -143,7 +131,7 @@ pushd %{name}-%{version}
 		-DKICAD_SKIP_BOOST=ON \
 		-DKICAD_REPO_NAME=stable \
 		-DBUILD_GITHUB_PLUGIN=ON \
-		-DwxWidgets_CONFIG_EXECUTABLE=%{_bindir}/wx-config-3.0-gtk2
+		-DwxWidgets_CONFIG_EXECUTABLE=%{_bindir}/wx-config
 
 	#ugly workaround to fix build
 	#dunno what causes the extra ; in CXX_FLAGS which causes the failure
@@ -168,11 +156,6 @@ cd ../
 
 # Installing kicad-doc
 pushd %{docname}-%{version}
-	make -C build DESTDIR=%buildroot install
-popd
-
-# Installing kicad-library
-pushd %{libname}-%{version}
 	make -C build DESTDIR=%buildroot install
 popd
 
@@ -202,7 +185,6 @@ popd
 
 %files -f %{name}.lang
 %{_bindir}/*
-%{_libdir}/%{name}/plugins/*.xsl
 %{_iconsdir}/*/*/*
 %{_iconsdir}/%{name}.png
 %{_liconsdir}/%{name}.png
@@ -210,12 +192,17 @@ popd
 %{_datadir}/%{name}/demos/
 %{_datadir}/%{name}/template/
 %{_datadir}/applications
-%{_datadir}/mime/packages/kicad.xml
-%{_datadir}/mimelnk/application/*.desktop
+%{_datadir}/mime/packages/kicad*.xml
+%{_datadir}/%{name}/plugins
+%{_datadir}/%{name}/scripting
+%{_libdir}/%{name}
+%{_datadir}/appdata/*.xml
+%{py2_puresitedir}/*
+%{_libdir}/*.so*
 
 %files doc
 %doc %{_datadir}/doc/%{name}
 
 %files library
-%{_datadir}/%{name}/library
-%{_datadir}/%{name}/modules
+#{_datadir}/%{name}/library
+#{_datadir}/%{name}/modules
