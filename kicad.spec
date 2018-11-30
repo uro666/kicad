@@ -10,8 +10,9 @@
 %define	version 5.0.1
 
 %define	docname kicad-doc
-
-%define	libname kicad-library
+%define tempname kicad-templates
+%define symname kicad-symbols
+%define footname kicad-footprints
 
 %define i18nname kicad-i18n
 
@@ -26,8 +27,11 @@ Release:	1
 # popd
 Source0:	https://launchpad.net/kicad/5.0/%{version}/+download/%{name}-%{version}.tar.xz
 Source1:	%{docname}-%{version}.tar.gz
-Source3:	%{i18nname}-%{version}.tar.gz
-Source4:	get_kicad.sh
+Source2:	%{tempname}-%{version}.tar.gz
+Source3:        %{symname}-%{version}.tar.gz
+Source4:        %{footname}-%{version}.tar.gz
+Source5:	%{i18nname}-%{version}.tar.gz
+
 Source100:	kicad.rpmlintrc
 License:	GPLv2+
 Group:		Sciences/Computer science
@@ -52,7 +56,6 @@ BuildRequires:	asciidoc
 BuildRequires:	a2x
 BuildRequires:	dblatex
 BuildRequires:	perl(Unicode::GCString)
-Requires:	%{libname}
 Requires:	%{docname}
 
 %description
@@ -94,7 +97,11 @@ Kicad-library is a set of library needed by kicad.
 %prep
 %setup -q -T -b 0 -n %{name}-%{version}
 %setup -q -T -b 1 -n %{docname}-%{version}
-%setup -q -T -b 3 -n %{i18nname}-%{version}
+%setup -q -T -b 2 -n %{tempname}-%{version}
+%setup -q -T -b 3 -n %{symname}-%{version}
+%setup -q -T -b 4 -n %{footname}-%{version}
+%setup -q -T -b 5 -n %{i18nname}-%{version}
+
 cd ..
 
 # proper libname policy
@@ -151,8 +158,46 @@ pushd %{i18nname}-%{version}
 	%make
 popd
 
+# Building kicad-symbols
+pushd %{symname}-%{version}
+        %cmake \
+                -DKICAD_STABLE_VERSION:BOOL=ON \
+                -DCMAKE_BUILD_TYPE=Release 
+        %make
+popd
+
+# Building kicad-footprints
+pushd %{footname}-%{version}
+        %cmake \
+                -DKICAD_STABLE_VERSION:BOOL=ON \
+                -DCMAKE_BUILD_TYPE=Release
+        %make
+popd
+
+# Building kicad-templates
+pushd %{tempname}-%{version}
+        %cmake \
+                -DKICAD_STABLE_VERSION:BOOL=ON \
+                -DCMAKE_BUILD_TYPE=Release
+        %make
+popd
 %install
 cd ../
+
+# Installing kicad-symbols
+pushd %{symname}-%{version}
+       make -C build DESTDIR=%buildroot install
+popd
+
+# Installing kicad-footprints
+pushd %{footname}-%{version}
+       make -C build DESTDIR=%buildroot install
+popd
+
+# Installing kicad-templates
+pushd %{tempname}-%{version}
+       make -C build DESTDIR=%buildroot install
+popd
 
 # Installing kicad-doc
 pushd %{docname}-%{version}
@@ -204,5 +249,5 @@ popd
 %doc %{_datadir}/doc/%{name}
 
 %files library
-#{_datadir}/%{name}/library
-#{_datadir}/%{name}/modules
+%{_datadir}/%{name}/modules
+%{_datadir}/%{name}/library
