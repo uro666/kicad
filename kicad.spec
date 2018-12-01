@@ -36,6 +36,7 @@ Source100:	kicad.rpmlintrc
 License:	GPLv2+
 Group:		Sciences/Computer science
 Url:		http://www.kicad-pcb.org
+BuildRequires:	fontconfig
 BuildRequires:	wxgtku3.0-devel
 BuildRequires:	mesa-common-devel
 BuildRequires:	imagemagick
@@ -150,7 +151,7 @@ pushd %{name}-%{version}
 	find . -name flags.make -exec sed -i -e 's,-pthread;-fpermissive,-pthread -fpermissive,g' {} \;
 	find . -name link.txt -exec sed -i -e 's,-pthread;-fpermissive,-pthread -fpermissive,g' {} \;
 
-	make
+	%make
 popd
 
 
