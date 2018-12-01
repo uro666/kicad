@@ -227,19 +227,11 @@ pushd %{name}-%{version}
 		--dir=%buildroot%{_datadir}/applications \
 		%buildroot%{_datadir}/applications/*.desktop
 
-	# create icons
-	mkdir -p %{buildroot}%{_miconsdir} %{buildroot}%{_iconsdir} %{buildroot}%{_liconsdir}
-	convert -resize 16x16 %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg %{buildroot}%{_miconsdir}/%{name}.png
-	convert -resize 32x32 %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg %{buildroot}%{_iconsdir}/%{name}.png
-	convert -resize 48x48 %{buildroot}%{_datadir}/icons/hicolor/scalable/apps/%{name}.svg %{buildroot}%{_liconsdir}/%{name}.png
 popd
 
 %files -f %{name}.lang
 %{_bindir}/*
 %{_iconsdir}/*/*/*
-%{_iconsdir}/%{name}.png
-%{_liconsdir}/%{name}.png
-%{_miconsdir}/%{name}.png
 %{_datadir}/%{name}/demos/
 %{_datadir}/%{name}/template/
 %{_datadir}/applications
