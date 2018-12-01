@@ -46,6 +46,7 @@ BuildRequires:	openssl-devel
 BuildRequires:	gomp-devel
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(glm)
+BuildRequires:	pkgconfig(ngspice)
 BuildRequires:	curl-devel
 BuildRequires:	opencascade-devel
 BuildRequires:	wxPythonGTK-devel >= 3.0
