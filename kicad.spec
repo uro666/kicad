@@ -57,6 +57,7 @@ BuildRequires:	asciidoc
 BuildRequires:	a2x
 BuildRequires:	dblatex
 BuildRequires:	perl(Unicode::GCString)
+BuildRequires:	swig
 Requires:	%{docname}
 
 %description
