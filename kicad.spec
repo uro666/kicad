@@ -48,6 +48,7 @@ BuildRequires:	cmake
 BuildRequires:	pkgconfig(glm)
 BuildRequires:	pkgconfig(ngspice)
 BuildRequires:	pkgconfig(python2)
+BuildRequires:	pkgconfig(sm)
 BuildRequires:	curl-devel
 BuildRequires:	opencascade-devel
 BuildRequires:	wxPythonGTK-devel >= 3.0
