@@ -52,6 +52,7 @@ BuildRequires:	curl-devel
 BuildRequires:	opencascade-devel
 BuildRequires:	wxPythonGTK-devel >= 3.0
 
+BuildRequires:	source-highlight
 BuildRequires:	doxygen
 BuildRequires:	desktop-file-utils
 BuildRequires:	po4a
@@ -148,7 +149,7 @@ pushd %{name}-%{version}
 	find . -name flags.make -exec sed -i -e 's,-pthread;-fpermissive,-pthread -fpermissive,g' {} \;
 	find . -name link.txt -exec sed -i -e 's,-pthread;-fpermissive,-pthread -fpermissive,g' {} \;
 
-	%make
+	make
 popd
 
 
