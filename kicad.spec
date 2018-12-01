@@ -47,15 +47,16 @@ BuildRequires:	gomp-devel
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(glm)
 BuildRequires:	pkgconfig(ngspice)
+BuildRequires:	pkgconfig(python2)
 BuildRequires:	curl-devel
 BuildRequires:	opencascade-devel
 BuildRequires:	wxPythonGTK-devel >= 3.0
 
+BuildRequires:	doxygen
 BuildRequires:	desktop-file-utils
 BuildRequires:	po4a
 BuildRequires:	asciidoc
 BuildRequires:	a2x
-BuildRequires:	dblatex
 BuildRequires:	perl(Unicode::GCString)
 BuildRequires:	swig
 Requires:	%{docname}
