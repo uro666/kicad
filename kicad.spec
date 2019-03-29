@@ -204,6 +204,11 @@ pushd %{tempname}-%{version}
        make -C build DESTDIR=%buildroot install
 popd
 
+# Installing kicad-packages3D
+pushd %{symname}-%{version}
+       make -C build DESTDIR=%buildroot install
+popd
+
 # Installing kicad-doc
 pushd %{docname}-%{version}
 	make -C build DESTDIR=%buildroot install
