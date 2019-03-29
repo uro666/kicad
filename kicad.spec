@@ -7,7 +7,7 @@
 # specfile fragment
 
 %define	name kicad
-%define	version 5.0.1
+%define	version 5.1.0
 
 %define	docname kicad-doc
 %define tempname kicad-templates
@@ -18,14 +18,13 @@
 
 Name:		%{name}
 Summary:	An open source program for the creation of electronic schematic diagrams
-Epoch:		1
 Version:	%{version}
 Release:	1
 # git clone https://github.com/KiCad/kicad-source-mirror.git
 # pushd kicad-source-mirror
 # git archive --format=tar --prefix %{name}-%{version}-$(date +%Y%m%d)/ HEAD | xz -vf > ../%{name}-%{version}-$(date +%Y%m%d).tar.xz
 # popd
-Source0:	https://launchpad.net/kicad/5.0/%{version}/+download/%{name}-%{version}.tar.xz
+Source0:	https://launchpad.net/kicad/5.0/5.1.0/%{version}/+download/%{name}-%{version}.tar.xz
 Source1:	%{docname}-%{version}.tar.gz
 Source2:	%{tempname}-%{version}.tar.gz
 Source3:        %{symname}-%{version}.tar.gz
