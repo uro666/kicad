@@ -6,9 +6,6 @@
 # Use ./update.sh to generate latest tarballs and the corresponding
 # specfile fragment
 
-%define	name kicad
-%define	version 5.1.0
-
 %define	docname kicad-doc
 %define tempname kicad-templates
 %define symname kicad-symbols
@@ -16,20 +13,20 @@
 
 %define i18nname kicad-i18n
 
-Name:		%{name}
+Name:		kicad
 Summary:	An open source program for the creation of electronic schematic diagrams
-Version:	%{version}
+Version:	5.1.4
 Release:	1
 # git clone https://github.com/KiCad/kicad-source-mirror.git
 # pushd kicad-source-mirror
 # git archive --format=tar --prefix %{name}-%{version}-$(date +%Y%m%d)/ HEAD | xz -vf > ../%{name}-%{version}-$(date +%Y%m%d).tar.xz
 # popd
-Source0:	https://launchpad.net/kicad/5.0/5.1.0/%{version}/+download/%{name}-%{version}.tar.xz
-Source1:	%{docname}-%{version}.tar.gz
-Source2:	%{tempname}-%{version}.tar.gz
-Source3:        %{symname}-%{version}.tar.gz
-Source4:        %{footname}-%{version}.tar.gz
-Source5:	%{i18nname}-%{version}.tar.gz
+Source0:	https://github.com/KiCad/kicad-source-mirror/archive/%{version}.tar.gz
+Source1:	https://github.com/KiCad/%{docname}/archive/%{docname}-%{version}.tar.gz
+Source2:	https://github.com/KiCad/%{tempname}/archive/%{tempname}-%{version}.tar.gz
+Source3:	https://github.com/KiCad/%{symname}/archive/%{symname}-%{version}.tar.gz
+Source4:	https://github.com/KiCad/%{footname}/archive/%{footname}-%{version}.tar.gz
+Source5:	https://github.com/KiCad/%{i18nname}/archive/%{i18nname}-%{version}.tar.gz
 
 Source100:	kicad.rpmlintrc
 License:	GPLv2+
@@ -100,7 +97,7 @@ schematic diagrams and printed circuit board artwork.
 Kicad-library is a set of library needed by kicad.
 
 %prep
-%setup -q -T -b 0 -n %{name}-%{version}
+%setup -q -T -b 0 -n %{name}-source-mirror-%{version}
 %setup -q -T -b 1 -n %{docname}-%{version}
 %setup -q -T -b 2 -n %{tempname}-%{version}
 %setup -q -T -b 3 -n %{symname}-%{version}
@@ -110,7 +107,7 @@ Kicad-library is a set of library needed by kicad.
 cd ..
 
 # proper libname policy
-pushd %{name}-%{version}
+pushd %{name}-source-mirror-%{version}
 sed -i "s|KICAD_PLUGINS lib/kicad/plugins|KICAD_PLUGINS %{_lib}/kicad/plugins|g" CMakeLists.txt
 # KICAD_LIB ${CMAKE_INSTALL_PREFIX}/lib
 sed -i "s!CMAKE_INSTALL_PREFIX}/lib!CMAKE_INSTALL_PREFIX}/%{_lib}!g" CMakeLists.txt
@@ -133,7 +130,7 @@ pushd %{docname}-%{version}
 popd
 
 # Building kicad
-pushd %{name}-%{version}
+pushd %{name}-source-mirror-%{version}
 
 	%cmake \
 		-DBUILD_SHARED_LIBS:BOOL=OFF \
@@ -221,7 +218,7 @@ pushd %{i18nname}-%{version}
 popd
 
 # Installing kicad-%{version}
-pushd %{name}-%{version}
+pushd %{name}-source-mirror-%{version}
 	make -C build DESTDIR=%buildroot install
 
 	# create desktop file
