@@ -1,7 +1,7 @@
 sources:
-  5.1.4.tar.gz: 5c76eea2d4f74551c57a92fb0c77ce9721c0191b
-  kicad-doc-5.1.4.tar.gz: d51ea9801990986509ba24007fc20d729a5ffaa9
-  kicad-footprints-5.1.4.tar.gz: 8f4b76cadc24d1f390cb5318f4e744bec181e394
-  kicad-i18n-5.1.4.tar.gz: c539ba61c57bfdf26fdca6ffba8f2c2f2b43afbc
-  kicad-symbols-5.1.4.tar.gz: 8a8f0fdda791aef4ab6d3d86e8d4cb2590a8a342
-  kicad-templates-5.1.4.tar.gz: 30493b914932db97a362cb58d1cc36486014335f
+  5.1.5.tar.gz: a98b0db8c577dd9ed0becf3a9229003a38cc4810
+  5.1.5.tar.gz#kicad-doc-5.1.5.tar.gz: 58afdff4d891112f3450ca3cd25250fb46f03b96
+  5.1.5.tar.gz#kicad-footprints-5.1.5.tar.gz: b6a31b960920ae5ace272d6c98b75d2e0b1ab4a4
+  5.1.5.tar.gz#kicad-i18n-5.1.5.tar.gz: 2439effbc7ddd69aba51baee940c152bb1c37227
+  5.1.5.tar.gz#kicad-symbols-5.1.5.tar.gz: c5f62b4719f629dcf51ddd21d3355ba6dd33ba5e
+  5.1.5.tar.gz#kicad-templates-5.1.5.tar.gz: ff9b81f4bf1255f305e205558dbcd6cb6bc81fc3

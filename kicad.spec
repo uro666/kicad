@@ -15,18 +15,18 @@
 
 Name:		kicad
 Summary:	An open source program for the creation of electronic schematic diagrams
-Version:	5.1.4
+Version:	5.1.5
 Release:	1
 # git clone https://github.com/KiCad/kicad-source-mirror.git
 # pushd kicad-source-mirror
 # git archive --format=tar --prefix %{name}-%{version}-$(date +%Y%m%d)/ HEAD | xz -vf > ../%{name}-%{version}-$(date +%Y%m%d).tar.xz
 # popd
 Source0:	https://github.com/KiCad/kicad-source-mirror/archive/%{version}.tar.gz
-Source1:	https://github.com/KiCad/%{docname}/archive/%{docname}-%{version}.tar.gz
-Source2:	https://github.com/KiCad/%{tempname}/archive/%{tempname}-%{version}.tar.gz
-Source3:	https://github.com/KiCad/%{symname}/archive/%{symname}-%{version}.tar.gz
-Source4:	https://github.com/KiCad/%{footname}/archive/%{footname}-%{version}.tar.gz
-Source5:	https://github.com/KiCad/%{i18nname}/archive/%{i18nname}-%{version}.tar.gz
+Source1:	https://github.com/KiCad/%{docname}/archive/%{version}.tar.gz#%{docname}-%{version}.tar.gz
+Source2:	https://github.com/KiCad/%{tempname}/archive/%{version}.tar.gz#%{tempname}-%{version}.tar.gz
+Source3:	https://github.com/KiCad/%{symname}/archive/%{version}.tar.gz#%{symname}-%{version}.tar.gz
+Source4:	https://github.com/KiCad/%{footname}/archive/%{version}.tar.gz#%{footname}-%{version}.tar.gz
+Source5:	https://github.com/KiCad/%{i18nname}/archive/%{version}.tar.gz#%{i18nname}-%{version}.tar.gz
 
 Source100:	kicad.rpmlintrc
 License:	GPLv2+
