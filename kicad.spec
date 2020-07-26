@@ -16,7 +16,7 @@
 Name:		kicad
 Summary:	An open source program for the creation of electronic schematic diagrams
 Version:	5.1.5
-Release:	1
+Release:	2
 # git clone https://github.com/KiCad/kicad-source-mirror.git
 # pushd kicad-source-mirror
 # git archive --format=tar --prefix %{name}-%{version}-$(date +%Y%m%d)/ HEAD | xz -vf > ../%{name}-%{version}-$(date +%Y%m%d).tar.xz
@@ -61,6 +61,7 @@ BuildRequires:	a2x
 BuildRequires:	perl(Unicode::GCString)
 BuildRequires:	swig
 Requires:	%{docname}
+Requires:	python3dist(wxpython)
 
 %description
 Kicad is an open source (GPL) program for the creation of electronic
