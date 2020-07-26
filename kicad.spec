@@ -245,7 +245,7 @@ popd
 %{_datadir}/%{name}/scripting
 %{_libdir}/%{name}
 %{_datadir}/appdata/*.xml
-%{py2_puresitedir}/*
+%{py3_puresitedir}/*
 %{_libdir}/*.so*
 
 %files doc
