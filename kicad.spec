@@ -27,6 +27,7 @@ Source2:	https://github.com/KiCad/%{tempname}/archive/%{version}.tar.gz#%{tempna
 Source3:	https://github.com/KiCad/%{symname}/archive/%{version}.tar.gz#%{symname}-%{version}.tar.gz
 Source4:	https://github.com/KiCad/%{footname}/archive/%{version}.tar.gz#%{footname}-%{version}.tar.gz
 Source5:	https://github.com/KiCad/%{i18nname}/archive/%{version}.tar.gz#%{i18nname}-%{version}.tar.gz
+Patch1:		0001-include-algorithm-so-std-sort-is-found.patch
 
 Source100:	kicad.rpmlintrc
 License:	GPLv2+
@@ -39,16 +40,16 @@ BuildRequires:	imagemagick
 BuildRequires:	boost-devel
 BuildRequires:	glew-devel
 BuildRequires:	cairo-devel
-BuildRequires:	openssl-devel
+BuildRequires:	pkgconfig(openssl)
 BuildRequires:	gomp-devel
 BuildRequires:	cmake
 BuildRequires:	pkgconfig(glm)
 BuildRequires:	pkgconfig(ngspice)
-BuildRequires:	pkgconfig(python2)
+BuildRequires:	pkgconfig(python3)
 BuildRequires:	pkgconfig(sm)
 BuildRequires:	curl-devel
 BuildRequires:	opencascade-devel
-BuildRequires:	wxPythonGTK-devel >= 3.0
+BuildRequires:	python3dist(wxpython)
 
 BuildRequires:	source-highlight
 BuildRequires:	doxygen
@@ -98,12 +99,12 @@ Kicad-library is a set of library needed by kicad.
 
 %prep
 %setup -q -T -b 0 -n %{name}-source-mirror-%{version}
+%patch1 -p1
 %setup -q -T -b 1 -n %{docname}-%{version}
 %setup -q -T -b 2 -n %{tempname}-%{version}
 %setup -q -T -b 3 -n %{symname}-%{version}
 %setup -q -T -b 4 -n %{footname}-%{version}
 %setup -q -T -b 5 -n %{i18nname}-%{version}
-
 cd ..
 
 # proper libname policy
@@ -136,6 +137,8 @@ pushd %{name}-source-mirror-%{version}
 		-DBUILD_SHARED_LIBS:BOOL=OFF \
 		-DKICAD_STABLE_VERSION:BOOL=ON \
 		-DKICAD_wxUSE_UNICODE=ON \
+    -DKICAD_SCRIPTING_WXPYTHON_PHOENIX=ON \
+                -DKICAD_SCRIPTING_PYTHON3=ON \
 		-DCMAKE_BUILD_TYPE=Release \
 		-DKICAD_SKIP_BOOST=ON \
 		-DKICAD_REPO_NAME=stable \
