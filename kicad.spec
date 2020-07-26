@@ -50,6 +50,7 @@ BuildRequires:	pkgconfig(sm)
 BuildRequires:	curl-devel
 BuildRequires:	opencascade-devel
 BuildRequires:	python3dist(wxpython)
+BuildRequires:	python-sip4-wx
 
 BuildRequires:	source-highlight
 BuildRequires:	doxygen
