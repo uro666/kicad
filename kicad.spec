@@ -1,66 +1,67 @@
-%define	Werror_cflags	%nil
-%define	debug_package	%nil
-%define _disable_lto 1
-%define date %nil
+#%%define	Werror_cflags	%nil
+#%%define	debug_package	%nil
+#%%define _disable_lto 1
+#%%define date %nil
 
-# Use ./update.sh to generate latest tarballs and the corresponding
-# specfile fragment
+%bcond_without	doc
 
-%define	docname kicad-doc
-%define tempname kicad-templates
-%define symname kicad-symbols
-%define footname kicad-footprints
-
-%define i18nname kicad-i18n
-
+Summary:	EDA software suite for creation of schematic diagrams and PCBs
 Name:		kicad
-Summary:	An open source program for the creation of electronic schematic diagrams
-Version:	5.1.5
-Release:	2
-# git clone https://github.com/KiCad/kicad-source-mirror.git
-# pushd kicad-source-mirror
-# git archive --format=tar --prefix %{name}-%{version}-$(date +%Y%m%d)/ HEAD | xz -vf > ../%{name}-%{version}-$(date +%Y%m%d).tar.xz
-# popd
-Source0:	https://github.com/KiCad/kicad-source-mirror/archive/%{version}.tar.gz
-Source1:	https://github.com/KiCad/%{docname}/archive/%{version}.tar.gz#%{docname}-%{version}.tar.gz
-Source2:	https://github.com/KiCad/%{tempname}/archive/%{version}.tar.gz#%{tempname}-%{version}.tar.gz
-Source3:	https://github.com/KiCad/%{symname}/archive/%{version}.tar.gz#%{symname}-%{version}.tar.gz
-Source4:	https://github.com/KiCad/%{footname}/archive/%{version}.tar.gz#%{footname}-%{version}.tar.gz
-Source5:	https://github.com/KiCad/%{i18nname}/archive/%{version}.tar.gz#%{i18nname}-%{version}.tar.gz
-Patch1:		0001-include-algorithm-so-std-sort-is-found.patch
-
-Source100:	kicad.rpmlintrc
-License:	GPLv2+
+License:	GPLv3+
 Group:		Sciences/Computer science
-Url:		http://www.kicad-pcb.org
-BuildRequires:	fontconfig
-BuildRequires:	wxgtku3.0-devel
-BuildRequires:	mesa-common-devel
-BuildRequires:	imagemagick
+Version:	6.0.10
+Release:	1
+URL:		https://www.kicad.org
+Source0:	https://gitlab.com/kicad/code/kicad/-/archive/%{version}/%{name}-%{version}.tar.gz
+Source1:	https://gitlab.com/kicad/services/%{name}-doc/-/archive/%{version}/%{name}-doc-%{version}.tar.gz
+Source2:	https://gitlab.com/kicad/libraries/%{name}-templates/-/archive/%{version}/%{name}-templates-%{version}.tar.gz
+Source3:	https://gitlab.com/kicad/libraries/%{name}-symbols/-/archive/%{version}/%{name}-symbols-%{version}.tar.gz
+Source4:	https://gitlab.com/kicad/libraries/%{name}-footprints/-/archive/%{version}/%{name}-footprints-%{version}.tar.gz
+Source5:	https://gitlab.com/kicad/libraries/%{name}-packages3D/-/archive/%{version}/%{name}-packages3D-%{version}.tar.gz
+#Patch1:		0001-include-algorithm-so-std-sort-is-found.patch
+Source100:	kicad.rpmlintrc
+
+BuildRequires:	cmake ninja
+BuildRequires:	chrpath
 BuildRequires:	boost-devel
-BuildRequires:	glew-devel
-BuildRequires:	cairo-devel
-BuildRequires:	pkgconfig(openssl)
-BuildRequires:	gomp-devel
-BuildRequires:	cmake
+BuildRequires:	desktop-file-utils
+BuildRequires:	doxygen
+#BuildRequires:	git
+BuildRequires:	fontconfig
+#BuildRequires:	gomp-devel
+#BuildRequires:	imagemagick
+BuildRequires:	po4a
+BuildRequires:	source-highlight
+BuildRequires:	opencascade-devel
+BuildRequires:	perl(Unicode::GCString)
+BuildRequires:	python3dist(wxpython)
+BuildRequires:	cmake(opencascade)
+BuildRequires:	pkgconfig(appstream-glib)
+BuildRequires:	pkgconfig(cairo)
+BuildRequires:	pkgconfig(egl)
+BuildRequires:	pkgconfig(gl)
+BuildRequires:	pkgconfig(glew)
 BuildRequires:	pkgconfig(glm)
+BuildRequires:	pkgconfig(glu)
+BuildRequires:	pkgconfig(gtk+-3.0)
+BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(ngspice)
+BuildRequires:	pkgconfig(openssl)
 BuildRequires:	pkgconfig(python3)
 BuildRequires:	pkgconfig(sm)
-BuildRequires:	curl-devel
-BuildRequires:	opencascade-devel
-BuildRequires:	python3dist(wxpython)
-BuildRequires:	python-sip4-wx
-
-BuildRequires:	source-highlight
-BuildRequires:	doxygen
-BuildRequires:	desktop-file-utils
-BuildRequires:	po4a
-BuildRequires:	asciidoc
-BuildRequires:	a2x
-BuildRequires:	perl(Unicode::GCString)
+BuildRequires:	pkgconfig(zlib)
 BuildRequires:	swig
-Requires:	%{docname}
+BuildRequires:	wxgtku3.1-devel
+BuildRequires:  po4a
+#BuildRequires:  rubygem-asciidoctor
+%if %{with doc}
+BuildRequires:	a2x
+BuildRequires:	asciidoc
+BuildRequires:	asciidoctor
+#BuildRequires:	dblatex
+%endif
+
+Requires:	%{name}-doc
 Requires:	python3dist(wxpython)
 
 %description
@@ -74,166 +75,6 @@ Kicad is a set of four programs and a project manager:
 * Gerbview:	GERBER viewer (photoplotter documents).
 * Cvpcb:	footprint selector for components used in the circuit design.
 * Kicad:	project manager.
-
-%package doc
-Summary:	Documentation for kicad (creation of electronic schematic diagrams)
-License:	GPL
-Requires:	%{name}
-BuildArch:	noarch
-
-%description doc
-Kicad is an open source (GPL) program for the creation of electronic
-schematic diagrams and printed circuit board artwork.
-
-Kicad-doc is the documentation for kicad.
-
-%package library
-Summary:	Library for kicad (creation of electronic schematic diagrams)
-License:	GPL
-Requires:	%{name}
-BuildArch:	noarch
-
-%description library
-Kicad is an open source (GPL) program for the creation of electronic
-schematic diagrams and printed circuit board artwork.
-
-Kicad-library is a set of library needed by kicad.
-
-%prep
-%setup -q -T -b 0 -n %{name}-source-mirror-%{version}
-%patch1 -p1
-%setup -q -T -b 1 -n %{docname}-%{version}
-%setup -q -T -b 2 -n %{tempname}-%{version}
-%setup -q -T -b 3 -n %{symname}-%{version}
-%setup -q -T -b 4 -n %{footname}-%{version}
-%setup -q -T -b 5 -n %{i18nname}-%{version}
-cd ..
-
-# proper libname policy
-pushd %{name}-source-mirror-%{version}
-sed -i "s|KICAD_PLUGINS lib/kicad/plugins|KICAD_PLUGINS %{_lib}/kicad/plugins|g" CMakeLists.txt
-# KICAD_LIB ${CMAKE_INSTALL_PREFIX}/lib
-sed -i "s!CMAKE_INSTALL_PREFIX}/lib!CMAKE_INSTALL_PREFIX}/%{_lib}!g" CMakeLists.txt
-popd
-
-%build
-%setup_compile_flags
-export CXX="%__cxx -std=c++11"
-export LC_ALL=C
-cd ../
-
-# Building kicad-doc
-pushd %{docname}-%{version}
-	%cmake \
-		-DKICAD_STABLE_VERSION:BOOL=ON \
-		-DKICAD_wxUSE_UNICODE=ON \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DBUILD_FORMATS=html
-	%make
-popd
-
-# Building kicad
-pushd %{name}-source-mirror-%{version}
-
-	%cmake \
-		-DBUILD_SHARED_LIBS:BOOL=OFF \
-		-DKICAD_STABLE_VERSION:BOOL=ON \
-		-DKICAD_wxUSE_UNICODE=ON \
-    -DKICAD_SCRIPTING_WXPYTHON_PHOENIX=ON \
-                -DKICAD_SCRIPTING_PYTHON3=ON \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DKICAD_SKIP_BOOST=ON \
-		-DKICAD_REPO_NAME=stable \
-		-DBUILD_GITHUB_PLUGIN=ON \
-		-DwxWidgets_CONFIG_EXECUTABLE=%{_bindir}/wx-config
-
-	#ugly workaround to fix build
-	#dunno what causes the extra ; in CXX_FLAGS which causes the failure
-	find . -name flags.make -exec sed -i -e 's,-pthread;-fpermissive,-pthread -fpermissive,g' {} \;
-	find . -name link.txt -exec sed -i -e 's,-pthread;-fpermissive,-pthread -fpermissive,g' {} \;
-
-	%make
-popd
-
-
-# Building kicad-i18n
-pushd %{i18nname}-%{version}
-	%cmake \
-		-DKICAD_STABLE_VERSION:BOOL=ON \
-		-DCMAKE_BUILD_TYPE=Release \
-		-DKICAD_I18N_UNIX_STRICT_PATH=ON
-	%make
-popd
-
-# Building kicad-symbols
-pushd %{symname}-%{version}
-        %cmake \
-                -DKICAD_STABLE_VERSION:BOOL=ON \
-                -DCMAKE_BUILD_TYPE=Release 
-        %make
-popd
-
-# Building kicad-footprints
-pushd %{footname}-%{version}
-        %cmake \
-                -DKICAD_STABLE_VERSION:BOOL=ON \
-                -DCMAKE_BUILD_TYPE=Release
-        %make
-popd
-
-# Building kicad-templates
-pushd %{tempname}-%{version}
-        %cmake \
-                -DKICAD_STABLE_VERSION:BOOL=ON \
-                -DCMAKE_BUILD_TYPE=Release
-        %make
-popd
-%install
-cd ../
-
-# Installing kicad-symbols
-pushd %{symname}-%{version}
-       make -C build DESTDIR=%buildroot install
-popd
-
-# Installing kicad-footprints
-pushd %{footname}-%{version}
-       make -C build DESTDIR=%buildroot install
-popd
-
-# Installing kicad-templates
-pushd %{tempname}-%{version}
-       make -C build DESTDIR=%buildroot install
-popd
-
-# Installing kicad-packages3D
-pushd %{symname}-%{version}
-       make -C build DESTDIR=%buildroot install
-popd
-
-# Installing kicad-doc
-pushd %{docname}-%{version}
-	make -C build DESTDIR=%buildroot install
-popd
-
-# Installing kicad-i18n
-pushd %{i18nname}-%{version}
-	make -C build DESTDIR=%buildroot install
-	%find_lang %{name}
-popd
-
-# Installing kicad-%{version}
-pushd %{name}-source-mirror-%{version}
-	make -C build DESTDIR=%buildroot install
-
-	# create desktop file
-	desktop-file-install --vendor='' \
-		--remove-category='Scientific' \
-		--add-category='Science;Electronics;Education' \
-		--dir=%buildroot%{_datadir}/applications \
-		%buildroot%{_datadir}/applications/*.desktop
-
-popd
 
 %files -f %{name}.lang
 %{_bindir}/*
@@ -249,9 +90,156 @@ popd
 %{py3_puresitedir}/*
 %{_libdir}/*.so*
 
+#----------------------------------------------------------------------------
+
+%package doc
+Summary:	Documentation for kicad (creation of electronic schematic diagrams)
+License:	GPLv3+ or CC-BY
+BuildArch:	noarch
+
+%description doc
+Kicad is an open source (GPL) program for the creation of electronic
+schematic diagrams and printed circuit board artwork.
+
+%{name}-doc is the documentation for kicad.
+
 %files doc
 %doc %{_datadir}/doc/%{name}
+
+#----------------------------------------------------------------------------
+
+%package library
+Summary:	Library for kicad (creation of electronic schematic diagrams)
+License:	GPL
+Requires:	%{name}
+BuildArch:	noarch
+
+%description library
+Kicad is an open source (GPL) program for the creation of electronic
+schematic diagrams and printed circuit board artwork.
+
+%{name}-library is a set of library needed by kicad.
 
 %files library
 %{_datadir}/%{name}/modules
 %{_datadir}/%{name}/library
+
+#----------------------------------------------------------------------------
+
+%prep
+%autosetup -p1 -a 1 -a 2 -a 3 -a 4 -a 5
+
+%build
+# kicad
+%cmake \
+	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+	-DKICAD_BUILD_I18N:BOOL=ON \
+	-DKICAD_BUILD_QA_TESTS:BOOL=OFF \
+	-DKICAD_I18N_UNIX_STRICT_PATH:BOOL=ON \
+    -DKICAD_INSTALL_DEMOS:BOOL=ON \
+    -DKICAD_PCM:BOOL=ON \
+	-DKICAD_SCRIPTING:BOOL=ON \
+	-DKICAD_SCRIPTING_ACTION_MENU:BOOL=ON \
+	-DKICAD_SCRIPTING_MODULES:BOOL=ON \
+	-DKICAD_SCRIPTING_PYTHON3:BOOL=ON \
+	-DKICAD_SCRIPTING_WXPYTHON_PHOENIX:BOOL=ON \
+	-DKICAD_SPICE:BOOL=ON \
+	-DKICAD_USE_EGL:BOOL=ON \
+    -DKICAD_USE_OCC:BOOL=ON \
+	-DKICAD_VERSION_EXTRA=%{release} \
+    -DPYTHON_SITE_PACKAGE_PATH=%{python3_sitearch} \
+	-G Ninja
+%ninja_build
+
+# docs (HTML only)
+%if %{with doc}
+pushd %{name}-doc-%{version}
+%cmake \
+	-DBUILD_FORMATS=html \
+	-DPDF_GENERATOR=none \
+	-G Ninja
+%ninja_build
+popd
+%endif
+
+# footprints
+pushd %{name}-footprints-%{version}
+%cmake -G Ninja
+%ninja_build
+popd
+
+# packages3D
+pushd %{p3dnamename}-%{version}
+%cmake -G Ninja
+%ninja_build
+popd
+
+# symbols
+pushd %{name}-symbols-%{version}
+%cmake -G Ninja
+%ninja_build
+popd
+
+# templates
+pushd %{name}-templates-%{version}
+%cmake -G Ninja
+%ninja_build
+popd
+
+%install
+# kicad
+%ninja_install -C build
+
+# Binaries must be executable to be detected by find-debuginfo.sh
+#chmod +x %{buildroot}%{python3_sitearch}/_pcbnew.so
+
+# Binaries are not allowed to contain rpaths
+#chrpath --delete %{buildroot}%{python3_sitearch}/_pcbnew.so
+
+# footprints
+pushd %{name}-footprints-%{version}
+%ninja_install -C build
+cp -p LICENSE.md ../LICENSE-footprints.md
+cp -p README.md ../README-footprints.md
+popd
+
+# packages3D
+pushd %{name}-packages3D-%{version}
+%ninja_install -C build
+cp -p LICENSE.md ../LICENSE-packages3D.md
+cp -p README.md ../README-packages3D.md
+popd
+
+# symbols
+pushd %{name}-symbols-%{version}
+%ninja_install -C build
+cp -p LICENSE.md ../LICENSE-symbols.md
+cp -p README.md ../README-symbols.md
+popd
+
+# templates
+pushd %{name}-templates-%{version}
+%ninja_install -C build
+cp -p LICENSE.md ../LICENSE-templates.md
+cp -p README.md ../README-templates.md
+popd
+
+# docs (HTML only)
+%if %{with doc}
+pushd %{name}-doc-%{version}
+%ninja_install -C build
+popd
+%endif
+
+# .desktop
+for desktopfile in %{buildroot}%{_datadir}/applications/*.desktop ; do
+	desktop-file-install
+		--remove-category='Scientific' \
+		--add-category='Science;Electronics;Education' \
+		--dir=%buildroot%{_datadir}/applications \
+		${desktopfile}
+done
+
+# locales
+%find_lang %{name}
+
