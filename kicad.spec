@@ -18,6 +18,8 @@ Source2:	https://gitlab.com/kicad/libraries/%{name}-templates/-/archive/%{versio
 Source3:	https://gitlab.com/kicad/libraries/%{name}-symbols/-/archive/%{version}/%{name}-symbols-%{version}.tar.gz
 Source4:	https://gitlab.com/kicad/libraries/%{name}-footprints/-/archive/%{version}/%{name}-footprints-%{version}.tar.gz
 Source5:	https://gitlab.com/kicad/libraries/%{name}-packages3D/-/archive/%{version}/%{name}-packages3D-%{version}.tar.gz
+# (mageia)
+Patch0:		kicad-wxBitmapBundle.patch
 #Patch1:		0001-include-algorithm-so-std-sort-is-found.patch
 Source100:	kicad.rpmlintrc
 
