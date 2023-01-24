@@ -51,7 +51,7 @@ BuildRequires:	pkgconfig(python3)
 BuildRequires:	pkgconfig(sm)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	swig
-BuildRequires:	wxgtku3.1-devel
+BuildRequires:	wxgtku3.2-devel
 BuildRequires:  po4a
 #BuildRequires:  rubygem-asciidoctor
 %if %{with doc}
