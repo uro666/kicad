@@ -54,8 +54,8 @@ BuildRequires:	pkgconfig(sm)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	swig
 BuildRequires:	wxgtku3.2-devel
-BuildRequires:  po4a
-#BuildRequires:  rubygem-asciidoctor
+BuildRequires:	po4a
+#BuildRequires:	rubygem-asciidoctor
 %if %{with doc}
 BuildRequires:	a2x
 BuildRequires:	asciidoc
@@ -132,14 +132,16 @@ schematic diagrams and printed circuit board artwork.
 %autosetup -p1 -a 1 -a 2 -a 3 -a 4 -a 5
 
 %build
+export LDFLAGS="%{ldflags} `pkg-config --libs libcurl`"
+
 # kicad
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DKICAD_BUILD_I18N:BOOL=ON \
 	-DKICAD_BUILD_QA_TESTS:BOOL=OFF \
 	-DKICAD_I18N_UNIX_STRICT_PATH:BOOL=ON \
-    -DKICAD_INSTALL_DEMOS:BOOL=ON \
-    -DKICAD_PCM:BOOL=ON \
+	-DKICAD_INSTALL_DEMOS:BOOL=ON \
+	-DKICAD_PCM:BOOL=ON \
 	-DKICAD_SCRIPTING:BOOL=ON \
 	-DKICAD_SCRIPTING_ACTION_MENU:BOOL=ON \
 	-DKICAD_SCRIPTING_MODULES:BOOL=ON \
@@ -147,9 +149,9 @@ schematic diagrams and printed circuit board artwork.
 	-DKICAD_SCRIPTING_WXPYTHON_PHOENIX:BOOL=ON \
 	-DKICAD_SPICE:BOOL=ON \
 	-DKICAD_USE_EGL:BOOL=ON \
-    -DKICAD_USE_OCC:BOOL=ON \
+	-DKICAD_USE_OCC:BOOL=ON \
 	-DKICAD_VERSION_EXTRA=%{release} \
-    -DPYTHON_SITE_PACKAGE_PATH=%{python3_sitearch} \
+	-DPYTHON_SITE_PACKAGE_PATH=%{python3_sitearch} \
 	-G Ninja
 %ninja_build
 
