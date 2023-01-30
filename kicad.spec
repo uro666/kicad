@@ -9,7 +9,7 @@ Summary:	EDA software suite for creation of schematic diagrams and PCBs
 Name:		kicad
 License:	GPLv3+
 Group:		Sciences/Computer science
-Version:	6.0.10
+Version:	6.0.11
 Release:	1
 URL:		https://www.kicad.org
 Source0:	https://gitlab.com/kicad/code/kicad/-/archive/%{version}/%{name}-%{version}.tar.gz
@@ -20,7 +20,7 @@ Source4:	https://gitlab.com/kicad/libraries/%{name}-footprints/-/archive/%{versi
 Source5:	https://gitlab.com/kicad/libraries/%{name}-packages3D/-/archive/%{version}/%{name}-packages3D-%{version}.tar.gz
 # (mageia)
 Patch0:		kicad-wxBitmapBundle.patch
-#Patch1:		0001-include-algorithm-so-std-sort-is-found.patch
+#Patch1:	0001-include-algorithm-so-std-sort-is-found.patch
 Source100:	kicad.rpmlintrc
 
 BuildRequires:	cmake ninja
