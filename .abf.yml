@@ -1,7 +1,7 @@
 sources:
-  kicad-6.0.11.tar.gz: b82bc5d3d6e74067463b5986cdc2a8ad94cbafa4
-  kicad-doc-6.0.11.tar.gz: 2f1aa23d562e3954068d84f9e6856064b2bd1a6a
-  kicad-footprints-6.0.11.tar.gz: 321bd7f8dd3556ccd9b457214dd6065a1c9e2a97
-  kicad-symbols-6.0.11.tar.gz: 499542dec9fa445f3ad9edb2b8401143e5efe4fa
-  kicad-templates-6.0.11.tar.gz: 092167098b9166fb9b17e0c42d3bf7af3df4b1b5
-  kicad-packages3D-6.0.11.tar.gz: 1a5ebdecf67b8817e8c66d5f42a91e21f5b58ec7
+  kicad-7.0.0.tar.gz: b03737b241cc609151d33b22927fb971c30ac655
+  kicad-doc-7.0.0.tar.gz: 44731259ac747e4458d97c9ce2496bb308619a03
+  kicad-footprints-7.0.0.tar.gz: 7be0daf44b26a20280b7a51526c2774992db6d24
+  kicad-packages3D-7.0.0.tar.gz: f962779e13ec50d4e3252f63f72d16e0adb6c831
+  kicad-symbols-7.0.0.tar.gz: 225909b27d37208f3097c6ba7f52da7dc42be178
+  kicad-templates-7.0.0.tar.gz: 8b4038cd6261d70e894a774b914099c3f983bbb6
