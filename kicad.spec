@@ -130,7 +130,8 @@ schematic diagrams and printed circuit board artwork.
 #----------------------------------------------------------------------------
 
 %prep
-%autosetup -p1 -a 1 -a 2 -a 3 -a 4 -a 5
+%setup -a1 -a2 -a3 -a4 -a5
+%autopatch -p1
 
 %build
 export LDFLAGS="%{ldflags} `pkg-config --libs libcurl`"
