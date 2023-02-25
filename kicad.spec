@@ -130,6 +130,9 @@ schematic diagrams and printed circuit board artwork.
 #----------------------------------------------------------------------------
 
 %prep
+# (mandian) this is a workaround suggested by berolinux
+# in order to handle multiple sources because autosetup
+# fails
 %setup -a1 -a2 -a3 -a4 -a5
 %autopatch -p1
 
@@ -159,6 +162,7 @@ export LDFLAGS="%{ldflags} `pkg-config --libs libcurl`"
 
 # docs (HTML only)
 %if %{with doc}
+pwd
 pushd %{name}-doc-%{version}
 %cmake \
 	-DBUILD_FORMATS=html \
