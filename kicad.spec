@@ -140,6 +140,7 @@ schematic diagrams and printed circuit board artwork.
 export LDFLAGS="%{ldflags} `pkg-config --libs libcurl`"
 
 # kicad
+pushd .
 %cmake \
 	-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 	-DKICAD_BUILD_I18N:BOOL=ON \
@@ -159,6 +160,7 @@ export LDFLAGS="%{ldflags} `pkg-config --libs libcurl`"
 	-DPYTHON_SITE_PACKAGE_PATH=%{python3_sitearch} \
 	-G Ninja
 %ninja_build
+popd
 
 # docs (HTML only)
 %if %{with doc}
