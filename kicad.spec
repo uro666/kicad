@@ -181,7 +181,7 @@ pushd %{name}-footprints-%{version}
 popd
 
 # packages3D
-pushd %{p3dnamename}-%{version}
+pushd %{name}-packages3D-%{version}
 %cmake -G Ninja
 %ninja_build
 popd
