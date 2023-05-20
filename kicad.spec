@@ -245,7 +245,7 @@ popd
 
 # .desktop
 for desktopfile in %{buildroot}%{_datadir}/applications/*.desktop ; do
-	desktop-file-install
+	desktop-file-install \
 		--remove-category='Scientific' \
 		--add-category='Science;Electronics;Education' \
 		--dir=%buildroot%{_datadir}/applications \
