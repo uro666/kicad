@@ -9,15 +9,15 @@ Summary:	EDA software suite for creation of schematic diagrams and PCBs
 Name:		kicad
 License:	GPLv3+
 Group:		Sciences/Computer science
-Version:	7.0.0
+Version:	7.0.3
 Release:	1
 URL:		https://www.kicad.org
-Source0:	https://gitlab.com/kicad/code/kicad/-/archive/%{version}/%{name}-%{version}.tar.gz
-Source1:	https://gitlab.com/kicad/services/%{name}-doc/-/archive/%{version}/%{name}-doc-%{version}.tar.gz
-Source2:	https://gitlab.com/kicad/libraries/%{name}-templates/-/archive/%{version}/%{name}-templates-%{version}.tar.gz
-Source3:	https://gitlab.com/kicad/libraries/%{name}-symbols/-/archive/%{version}/%{name}-symbols-%{version}.tar.gz
-Source4:	https://gitlab.com/kicad/libraries/%{name}-footprints/-/archive/%{version}/%{name}-footprints-%{version}.tar.gz
-Source5:	https://gitlab.com/kicad/libraries/%{name}-packages3D/-/archive/%{version}/%{name}-packages3D-%{version}.tar.gz
+Source0:	https://gitlab.com/kicad/code/kicad/-/archive/%{version}/%{name}-%{version}.tar.bz2
+Source1:	https://gitlab.com/kicad/services/%{name}-doc/-/archive/%{version}/%{name}-doc-%{version}.tar.bz2
+Source2:	https://gitlab.com/kicad/libraries/%{name}-templates/-/archive/%{version}/%{name}-templates-%{version}.tar.bz2
+Source3:	https://gitlab.com/kicad/libraries/%{name}-symbols/-/archive/%{version}/%{name}-symbols-%{version}.tar.bz2
+Source4:	https://gitlab.com/kicad/libraries/%{name}-footprints/-/archive/%{version}/%{name}-footprints-%{version}.tar.bz2
+Source5:	https://gitlab.com/kicad/libraries/%{name}-packages3D/-/archive/%{version}/%{name}-packages3D-%{version}.tar.bz2
 # (mageia)
 Patch0:		kicad-wxBitmapBundle.patch
 #Patch1:	0001-include-algorithm-so-std-sort-is-found.patch
