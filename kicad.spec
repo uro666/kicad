@@ -89,8 +89,8 @@ Kicad is a set of four programs and a project manager:
 %{_datadir}/%{name}/plugins
 %{_datadir}/%{name}/scripting
 %{_libdir}/%{name}
-%{_datadir}/appdata/*.xml
-%{py3_puresitedir}/*
+%{_metainfodir}/*.xml
+%{py3_platsitedir}/*
 %{_libdir}/*.so*
 
 #----------------------------------------------------------------------------
