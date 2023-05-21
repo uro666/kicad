@@ -78,7 +78,7 @@ Kicad is a set of four programs and a project manager:
 
 %files -f %{name}.lang
 %license LICENSE*
-%doc AUTHORS.txt README*txt
+%doc AUTHORS.txt README-*.md
 %{_bindir}/*
 %{_libdir}/%{name}
 %{_libdir}/*.so*
