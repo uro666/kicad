@@ -1,8 +1,3 @@
-#%%define	Werror_cflags	%nil
-#%%define	debug_package	%nil
-#%%define _disable_lto 1
-#%%define date %nil
-
 %bcond_without	doc
 
 Summary:	EDA software suite for creation of schematic diagrams and PCBs
@@ -67,6 +62,8 @@ BuildRequires:	asciidoctor
 Requires:	%{name}-doc
 Requires:	python3dist(wxpython)
 
+Obsoletes:	%{name}-library < %{EVRD}
+
 %description
 Kicad is an open source (GPL) program for the creation of electronic
 schematic diagrams and printed circuit board artwork.
@@ -80,18 +77,17 @@ Kicad is a set of four programs and a project manager:
 * Kicad:	project manager.
 
 %files -f %{name}.lang
+%license LICENSE*
+%doc AUTHORS.txt README*txt
 %{_bindir}/*
-%{_iconsdir}/*/*/*
-%{_datadir}/%{name}/demos/
-%{_datadir}/%{name}/template/
+%{_libdir}/%{name}
+%{_libdir}/*.so*
+%{py3_platsitedir}/*
+%{_datadir}/%{name}
 %{_datadir}/applications
 %{_datadir}/mime/packages/kicad*.xml
-%{_datadir}/%{name}/plugins
-%{_datadir}/%{name}/scripting
-%{_libdir}/%{name}
-%{_metainfodir}/*.xml
-%{py3_platsitedir}/*
-%{_libdir}/*.so*
+%{_iconsdir}/*/*/*
+%{_metainfodir}/*metainfo.xml
 
 #----------------------------------------------------------------------------
 
@@ -108,24 +104,6 @@ schematic diagrams and printed circuit board artwork.
 
 %files doc
 %doc %{_datadir}/doc/%{name}
-
-#----------------------------------------------------------------------------
-
-%package library
-Summary:	Library for kicad (creation of electronic schematic diagrams)
-License:	GPL
-Requires:	%{name}
-BuildArch:	noarch
-
-%description library
-Kicad is an open source (GPL) program for the creation of electronic
-schematic diagrams and printed circuit board artwork.
-
-%{name}-library is a set of library needed by kicad.
-
-%files library
-%{_datadir}/%{name}/modules
-%{_datadir}/%{name}/library
 
 #----------------------------------------------------------------------------
 
