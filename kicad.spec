@@ -5,7 +5,7 @@ Name:		kicad
 License:	GPLv3+
 Group:		Sciences/Computer science
 Version:	7.0.10
-Release:	1
+Release:	2
 URL:		https://www.kicad.org
 Source0:	https://gitlab.com/kicad/code/kicad/-/archive/%{version}/%{name}-%{version}.tar.bz2
 Source1:	https://gitlab.com/kicad/services/%{name}-doc/-/archive/%{version}/%{name}-doc-%{version}.tar.bz2
