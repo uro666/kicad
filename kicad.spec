@@ -25,7 +25,7 @@ Source5:	https://gitlab.com/kicad/libraries/kicad-packages3D/-/archive/%{p3dver}
 # Upstream only support x86_64 (inc znver1) and aarch64 builds.
 ExclusiveArch:  x86_64 znver1 aarch64
 
-BuildRequires:	cmake(boost)
+BuildRequires:	boost-devel >= 1.87.0
 BuildRequires:	cmake
 BuildRequires:	cmake(absl)
 BuildRequires:	ninja
