@@ -57,7 +57,7 @@ BuildRequires:	pkgconfig(appstream-glib)
 BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(libgit2)
 BuildRequires:	pkgconfig(libsecret-1)
-BuildRequires:	pkgconfig(ngspice)
+BuildRequires:	lib64ngspice-devel
 BuildRequires:	pkgconfig(pixman-1)
 BuildRequires:	pkgconfig(protobuf)
 BuildRequires:	protobuf-compiler >= 28.3
