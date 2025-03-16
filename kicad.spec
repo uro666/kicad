@@ -89,6 +89,9 @@ Requires:	python-wxpython >= 4.0
 Requires:	pkgconfig(odbc)
 
 Suggests:	kicad
+Obsoletes:	%{name}-library < %{EVRD}
+Obsoletes:	%{name}-unstable < %{EVRD}
+
 
 %description
 KiCad is EDA software to design electronic schematic diagrams and printed
@@ -109,6 +112,7 @@ Requires:	kicad >= 9.0.0
 Summary:	Documentation for KiCad
 License:	GPL-3.0-or-later or CC-BY
 BuildArch:	noarch
+Obsoletes:	%{name}-doc < %{docver}
 
 %description	doc
 Documentation for KiCad.
@@ -287,4 +291,3 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_docdir}/%{name}/help/
 %exclude %{_docdir}/%{name}/AUTHORS.txt
 %license %{name}-doc-%{docver}/LICENSE*
-
