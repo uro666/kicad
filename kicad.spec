@@ -1,25 +1,28 @@
-%global docver 9.0.0
+################################################################################
+#	NOTE	Edit the above version tags if any of the Source tarballs update
+#	NOTE	outside of KiCad major releases & bump for major version updates.
+################################################################################
+#	NOTE	Update the kicad-doc and kicad-packages3d packages when you update-
+#	NOTE	this package.
+#	NOTE	This package requires the kicad-packages3d package.
+#	NOTE	The KiCad packages are split this way to accommodate the build farm.
+################################################################################
 %global tplver 9.0.0
 %global symver 9.0.0
 %global footver 9.0.0
-%global p3dver 9.0.0
-## NOTE Edit the above version tags if any of the Source component's update
-## NOTE outside of KiCad major releases & bump for major version updates.
 %define cxxstd 20
 
 Name:		kicad
 Version:	9.0.0
-Release:	2
+Release:	4
 Summary:	EDA software suite for creation of schematic diagrams and PCBs
 URL:		https://www.kicad.org
 License:	GPL-3.0-or-later
 Group:		Sciences/Computer science
 Source0:	https://gitlab.com/kicad/code/kicad/-/archive/%{version}/kicad-%{version}.tar.gz
-Source1:	https://gitlab.com/kicad/services/kicad-doc/-/archive/%{docver}/kicad-doc-%{docver}.tar.gz
-Source2:	https://gitlab.com/kicad/libraries/kicad-templates/-/archive/%{tplver}/kicad-templates-%{tplver}.tar.gz
-Source3:	https://gitlab.com/kicad/libraries/kicad-symbols/-/archive/%{symver}/kicad-symbols-%{symver}.tar.gz
-Source4:	https://gitlab.com/kicad/libraries/kicad-footprints/-/archive/%{footver}/kicad-footprints-%{footver}.tar.gz
-Source5:	https://gitlab.com/kicad/libraries/kicad-packages3D/-/archive/%{p3dver}/kicad-packages3D-%{p3dver}.tar.gz
+Source1:	https://gitlab.com/kicad/libraries/kicad-templates/-/archive/%{tplver}/kicad-templates-%{tplver}.tar.gz
+Source2:	https://gitlab.com/kicad/libraries/kicad-symbols/-/archive/%{symver}/kicad-symbols-%{symver}.tar.gz
+Source3:	https://gitlab.com/kicad/libraries/kicad-footprints/-/archive/%{footver}/kicad-footprints-%{footver}.tar.gz
 
 ############################
 # Upstream only support x86_64 (inc znver1) and aarch64 builds.
@@ -69,12 +72,6 @@ BuildRequires:	pkgconfig(libzstd)
 BuildRequires:	pkgconfig(zlib-ng)
 
 ############################
-# Documentation
-BuildRequires:	po4a
-BuildRequires:	a2x
-BuildRequires:	asciidoctor
-
-############################
 Provides:	bundled(fmt) >= 9.0.0
 Provides:	bundled(libdxflib) >= 3.26.4
 Provides:	bundled(polyclipping) >= 6.4.2
@@ -88,7 +85,9 @@ Requires:	pkgconfig(protobuf)
 Requires:	python-wxpython >= 4.0
 Requires:	pkgconfig(odbc)
 
-Suggests:	kicad
+Requires:	kicad-packages3d = %{version}-%{release}
+Suggests:	kicad-doc = %{version}-%{release}
+
 Obsoletes:	%{name}-library < %{EVRD}
 Obsoletes:	%{name}-unstable < %{EVRD}
 
@@ -98,29 +97,9 @@ KiCad is EDA software to design electronic schematic diagrams and printed
 circuit board artwork of up to 32 layers.
 
 ############################
-%package	packages3d
-Summary:	3D Models for KiCad
-License:	CC-BY-SA
-BuildArch:	noarch
-Requires:	kicad >= 9.0.0
-
-%description	packages3d
-3D Models for KiCad.
-
-############################
-%package	doc
-Summary:	Documentation for KiCad
-License:	GPL-3.0-or-later or CC-BY
-BuildArch:	noarch
-Obsoletes:	%{name}-doc < %{docver}
-
-%description	doc
-Documentation for KiCad.
-
-############################
 %prep
-%setup -q -n %{name}-%{version} -a1 -a2 -a3 -a4 -a5
-%autopatch -p1
+%setup -q -n %{name}-%{version} -a1 -a2 -a3
+#autopatch -p1
 
 ############################
 %build
@@ -162,7 +141,7 @@ pushd .
 %ninja_build
 popd
 
-# Templates
+# Template libraries
 pushd %{name}-templates-%{tplver}/
 %cmake \
 	-G Ninja \
@@ -186,26 +165,6 @@ pushd %{name}-footprints-%{footver}/
 	-G Ninja \
 	-DCMAKE_CXX_STANDARD=%{cxxstd} \
 	-DKICAD_DATA=%{_datadir}/%{name}
-%ninja_build
-popd
-
-# 3D models
-pushd %{name}-packages3D-%{p3dver}/
-%cmake \
-	-G Ninja \
-	-DCMAKE_CXX_STANDARD=%{cxxstd} \
-	-DKICAD_DATA=%{_datadir}/%{name}
-%ninja_build
-popd
-
-# Documentation (HTML only)
-pushd %{name}-doc-%{docver}/
-%cmake \
-	-G Ninja \
-	-DCMAKE_CXX_STANDARD=%{cxxstd} \
-	-DKICAD_DOC_PATH=%{_docdir}/kicad/help \
-	-DPDF_GENERATOR=none \
-	-DBUILD_FORMATS=html
 %ninja_build
 popd
 
@@ -247,16 +206,6 @@ pushd %{name}-footprints-%{footver}/
 cp -p LICENSE.md ../LICENSE-footprints.md
 popd
 
-# 3D models
-pushd %{name}-packages3D-%{p3dver}/
-%ninja_install -C build
-popd
-
-# Documentation
-pushd %{name}-doc-%{docver}/
-%ninja_install -C build
-popd
-
 %find_lang %{name}
 
 ############################
@@ -264,7 +213,7 @@ popd
 appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 
 ############################
-%files	-f %{name}.lang
+%files -f %{name}.lang
 %doc AUTHORS.txt
 %attr(0755, root, root) %{_bindir}/*
 %{_libdir}/%{name}/
@@ -281,13 +230,3 @@ appstream-util validate-relax --nonet %{buildroot}%{_metainfodir}/*.metainfo.xml
 %{_datadir}/mime/packages/*.xml
 %{_metainfodir}/*.metainfo.xml
 %license LICENSE*
-%exclude %{_datadir}/%{name}/3dmodels/*
-
-%files	packages3d
-%{_datadir}/%{name}/3dmodels/*.3dshapes
-%license %{name}-packages3D-%{p3dver}/LICENSE*
-
-%files	doc
-%{_docdir}/%{name}/help/
-%exclude %{_docdir}/%{name}/AUTHORS.txt
-%license %{name}-doc-%{docver}/LICENSE*
