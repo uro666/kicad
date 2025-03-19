@@ -1,15 +1,15 @@
-################################################################################
-#	NOTE	Edit the above version tags if any of the Source tarballs update
-#	NOTE	outside of KiCad major releases & bump for major version updates.
-################################################################################
-#	NOTE	Update the kicad-doc and kicad-packages3d packages when you update-
-#	NOTE	this package.
-#	NOTE	This package requires the kicad-packages3d package.
-#	NOTE	The KiCad packages are split this way to accommodate the build farm.
-################################################################################
 %global tplver 9.0.0
 %global symver 9.0.0
 %global footver 9.0.0
+################################################################################
+# NOTE	Edit the above version tags if any of the Source tarballs update outside
+# NOTE	of KiCad major releases & bump them in sync with major version updates.
+################################################################################
+# NOTE	Update the kicad-doc and kicad-packages3d packages when you update-
+# NOTE	this package.
+# NOTE	This package requires the kicad-packages3d package for 3D viewing.
+# NOTE	The KiCad packages are split this way to accommodate the build farm.
+################################################################################
 %define cxxstd 20
 
 Name:		kicad
